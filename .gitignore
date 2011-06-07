@@ -1,0 +1,6 @@
+build.properties
+target
+.project
+.classpath
+*.log
+log

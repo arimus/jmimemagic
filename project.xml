@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+	<pomVersion>3</pomVersion>
+	<id>jmimemagic</id>
+	<name>Java Mime Magic Library</name>
+	<currentVersion>0.1.2</currentVersion>
+	<organization>
+		<name>none</name>
+	</organization>
+	<inceptionYear>2003</inceptionYear>
+	<package>net.sf.jmimemagic</package>
+	
+	<shortDescription>Determine the content type of files or streams.</shortDescription>
+
+	<description>
+		jMimeMagic is a Java library for determining the content type of files or streams.
+	</description>
+
+	<repository>
+		<connection>
+			scm:svn:https://svn.sourceforge.net/svnroot/jmimemagic/trunk
+		</connection>
+		<developerConnection>
+			scm:svn:https://svn.sourceforge.net/svnroot/jmimemagic/trunk
+		</developerConnection>
+		<url>
+			http://svn.sourceforge.net/viewvc/jmimemagic/
+		</url>
+	</repository>
+		
+	<build>
+		<nagEmailAddress>arimus@users.sourceforge.net</nagEmailAddress>
+		<sourceDirectory>${basedir}/src/java</sourceDirectory>		
+		<defaultGoal>jar</defaultGoal>
+		<unitTestSourceDirectory>${basedir}/src/test</unitTestSourceDirectory>
+		<unitTest>
+			<includes>
+				<include>**/*Test.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<targetPath>/</targetPath>
+					<directory>resources</directory>
+					<filtering>true</filtering>
+					<includes>
+						<include>*.properties</include>
+						<include>*.xml</include>
+						<include>*.dtd</include>
+					</includes>
+				</resource>
+			</resources>
+		</unitTest>
+		<unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+		<resources>
+			<resource>
+				<targetPath>/</targetPath>
+				<directory>resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>*.properties</include>
+					<include>*.xml</include>
+					<include>*.dtd</include>
+				</includes>
+				<excludes>
+					<exclude>log4j.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
+
+	<developers>
+		<developer>
+			<name>David Castro</name>
+			<id>arimus</id>
+			<email>arimus@users.sourceforge.net</email>
+			<organization>jmimemagic</organization>
+		</developer>		
+
+		<developer>
+			<name>Nate Jones</name>
+			<id>ndjones</id>
+			<email>ndjones@users.sourceforge.net</email>
+			<organization>jmimemagic</organization>
+		</developer>		
+	</developers>
+	
+	<!-- J A R  R E S O U R C E S -->
+	<!-- Resources that are packaged up inside the JAR file -->
+
+	<!--
+	<resources>
+		<resource>
+			<targetPath>/</targetPath>
+			<directory>resources</directory>
+			<includes>
+				<include>*.properties</include>
+				<include>*.xml</include>
+			</includes>
+		</resource>
+	</resources>
+	-->
+
+	<dependencies>
+		<dependency>
+		  <groupId>junit</groupId>
+		  <artifactId>junit</artifactId>
+		  <version>3.8.1</version>
+		  <properties>
+		  	<scope>test</scope>
+		  </properties>
+		</dependency>
+
+		<dependency>
+		  <groupId>oro</groupId>
+		  <artifactId>oro</artifactId>
+		  <version>2.0.8</version>
+		  <properties>
+		  	<scope>compile</scope>
+		  </properties>
+		</dependency>
+
+		<dependency>
+		  <groupId>commons-logging</groupId>
+		  <artifactId>commons-logging</artifactId>
+		  <version>1.0.4</version>
+		  <properties>
+		  	<scope>compile</scope>
+		  </properties>
+		</dependency>
+
+		<dependency>
+		  <groupId>log4j</groupId>
+		  <artifactId>log4j</artifactId>
+		  <version>1.2.8</version>
+		  <properties>
+		  	<scope>runtime</scope>
+		  </properties>
+		</dependency>
+
+		<dependency>
+		  <groupId>xerces</groupId>
+		  <artifactId>xerces</artifactId>
+		  <version>2.4.0</version>
+		  <properties>
+		  	<scope>runtime</scope>
+		  </properties>
+		</dependency>
+
+		<dependency>
+		  <groupId>xerces</groupId>
+		  <artifactId>xercesImpl</artifactId>
+		  <version>2.7.1</version>
+		  <properties>
+		  	<scope>runtime</scope>
+		  </properties>
+		</dependency>
+
+		<dependency>
+		  <groupId>xml-apis</groupId>
+		  <artifactId>xml-apis</artifactId>
+		  <version>2.0.2</version>
+		  <properties>
+		  	<scope>compile</scope>
+		  </properties>
+		</dependency>
+
+		<dependency>
+		  <groupId>xml-apis</groupId>
+		  <artifactId>xmlParserAPIs</artifactId>
+		  <version>2.0.2</version>
+		  <properties>
+		  	<scope>compile</scope>
+		  </properties>
+		</dependency>
+	</dependencies>
+
+</project>
+

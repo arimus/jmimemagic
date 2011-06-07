@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE magic PUBLIC "-//jmimemagic//DTD magic config 1.0//EN" "magic_1_0.dtd">
+<magic>
+<info>
+<version>0.2</version>
+<author>dcastro</author>
+<description>magic file</description>
+</info>
+
+<match-list>
+<!--
+<match>
+	<mimetype></mimetype>        # the mime type if matched 
+	<extension></extension>      # the likely extension for this matched stream 
+	<description>empty</description>  # description if matched 
+	<test type="" 
+	      offset="0" 
+		  length="" 
+		  bitmask="" 
+		  comparator="">
+	</test>                      # the test which defines this match 
+		# test   - this value may contain a '.', which represents any value
+		#          '.' must be replaced with '.'
+		#          xNN where N is [0-9] represents a hex value
+		# type   - one of:
+		#			 long        - long, platform byte order
+		#			 lelong      - long, little endian
+		#			 belong      - long, big endian
+		#			 short       - short
+		#			 leshort     - short, little endian
+		#			 beshort     - short, big endian
+		#			 string      - string
+		#			 string-ZZZZ - string with encoding defined by ZZZZ (any 
+		#			               length encoding name)
+		#			 byte        - byte
+		#			 regex       - regular expression in perl 5 style
+		#			 plugin      - call the specified class to determine if
+		#			               the stream is of this mime type
+		# offset     - location match should start from on the stream
+		#              normal offset - n (0-indexed byte position in stream)
+		#              indirect offset - for which types???
+		# length     - this is implicit when data is specified in <test/>, but
+		# 			   for regex and plugin this will limit the amount of data
+		# 			   used for comparison, as if the rest of the stream didn't
+		# 			   exist
+		# bitmask    - a bitmask that should be applied to the stream segment
+		# 			   before it is tested against the value or passed to
+		# 			   regex/plugin
+		# comparator - one of:
+		#                = - equals
+		#				 ! - not equals
+		#				 > - greater than
+		#				 < - less than
+		#				 & - all bits set
+		#				 ^ - all bit cleared
+	
+	<match-list>                    # example sub-match
+		<match>
+		<mimetype></mimetype>       # if submatch has diff mime type
+		<extension></extension>     # if submatch has diff ext 
+		<description 
+			  supplemental="">      # defined if this is a supplemental desc
+		</description>              # description if matched
+		<test offset="0"
+			  length=""
+			  type=""
+			  bitmask=""
+			  comparator="">
+		</test>                     # the test which defines this match 
+		</match>
+	</match-list>
+</match>
+
+-->
+<match>
+	<mimetype>audio/mp3</mimetype>
+	<extension></extension>
+	<description>MP3</description>
+	<test type="beshort" offset="0" length="" bitmask="0xfffe" comparator="=">0xfffa</test>
+	<match-list>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 32 kBits</description>
+		<property name="bitrate" value="32"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x10</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 40 kBits</description>
+		<property name="bitrate" value="40"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x20</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 48 kBits</description>
+		<property name="bitrate" value="48"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x30</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 56 kBits</description>
+		<property name="bitrate" value="56"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x40</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 64 kBits</description>
+		<property name="bitrate" value="64"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x50</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 80 kBits</description>
+		<property name="bitrate" value="80"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x60</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 96 kBits</description>
+		<property name="bitrate" value="96"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x70</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 112 kBits</description>
+		<property name="bitrate" value="112"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x80</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 128 kBits</description>
+		<property name="bitrate" value="128"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0x90</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 160 kBits</description>
+		<property name="bitrate" value="160"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0xA0</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 192 kBits</description>
+		<property name="bitrate" value="192"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0xB0</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 224 kBits</description>
+		<property name="bitrate" value="224"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0xC0</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 256 kBits</description>
+		<property name="bitrate" value="256"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0xD0</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 320 kBits</description>
+		<property name="bitrate" value="320"/>
+		<test type="byte" offset="2" length="" bitmask="0xf0" comparator="=">0xE0</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 44.1 kHz</description>
+		<property name="samplingrate" value="44.1"/>
+		<test type="byte" offset="2" length="" bitmask="0x0C" comparator="=">0x00</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 48 kHz</description>
+		<property name="samplingrate" value="48"/>
+		<test type="byte" offset="2" length="" bitmask="0x0C" comparator="=">0x04</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, 32 kHz</description>
+		<property name="samplingrate" value="32"/>
+		<test type="byte" offset="2" length="" bitmask="0x0C" comparator="=">0x08</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, Stereo</description>
+		<property name="channels" value="stereo"/>
+		<test type="byte" offset="3" length="" bitmask="0xC0" comparator="=">0x00</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, JStereo</description>
+		<property name="channels" value="jstereo"/>
+		<test type="byte" offset="3" length="" bitmask="0xC0" comparator="=">0x40</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, Dual-Ch</description>
+		<property name="channels" value="dual"/>
+		<test type="byte" offset="3" length="" bitmask="0xC0" comparator="=">0x80</test>
+	</match>
+	<match>
+		<mimetype></mimetype>
+		<extension></extension>
+		<description>b, Mono</description>
+		<property name="channels" value="mono"/>
+		<test type="byte" offset="3" length="" bitmask="0xC0" comparator="=">0xC0</test>
+	</match>
+	</match-list>
+</match>
+<match>
+	<mimetype>image/gif</mimetype>
+	<extension></extension>
+	<description>GIF image data</description>
+	<test type="string" offset="0" length="" bitmask="" comparator="=">GIF8</test>
+	<match-list>
+	<match>
+		<mimetype>b, version 8%s,</mimetype>
+		<extension></extension>
+		<description>b, version 8%s,</description>
+		<test type="string" offset="4" length="" bitmask="" comparator="=">7a</test>
+	</match>
+	<match>
+		<mimetype>b, version 8%s,</mimetype>
+		<extension></extension>
+		<description>b, version 8%s,</description>
+		<test type="string" offset="4" length="" bitmask="" comparator="=">9a</test>
+	</match>
+	</match-list>
+</match>
+<match>
+	<mimetype>image/png</mimetype>
+	<extension></extension>
+	<description>PNG image data</description>
+	<test type="string" offset="1" length="" bitmask="" comparator="=">PNG</test>
+	<match-list>
+	<match>
+		<mimetype>CORRUPTED,</mimetype>
+		<extension></extension>
+		<description>CORRUPTED,</description>
+		<test type="belong" offset="4" length="" bitmask="" comparator="!">0x0d0a1a0a</test>
+	</match>
+	<match>
+		<mimetype>X</mimetype>
+		<extension></extension>
+		<description>X</description>
+		<test type="belong" offset="4" length="" bitmask="" comparator="=">0x0d0a1a0a</test>
+		<match-list>
+		<match>
+			<mimetype>bcolor RGB,</mimetype>
+			<extension></extension>
+			<description>bcolor RGB,</description>
+			<test type="byte" offset="25" length="" bitmask="" comparator="=">2</test>
+		</match>
+		<match>
+			<mimetype>colormap,</mimetype>
+			<extension></extension>
+			<description>colormap,</description>
+			<test type="byte" offset="25" length="" bitmask="" comparator="=">3</test>
+		</match>
+		<match>
+			<mimetype>grayalpha,</mimetype>
+			<extension></extension>
+			<description>grayalpha,</description>
+			<test type="byte" offset="25" length="" bitmask="" comparator="=">4</test>
+		</match>
+		<match>
+			<mimetype>bcolor RGBA,</mimetype>
+			<extension></extension>
+			<description>bcolor RGBA,</description>
+			<test type="byte" offset="25" length="" bitmask="" comparator="=">6</test>
+		</match>
+		<match>
+			<mimetype>interlaced</mimetype>
+			<extension></extension>
+			<description>interlaced</description>
+			<test type="byte" offset="28" length="" bitmask="" comparator="=">1</test>
+		</match>
+		</match-list>
+	</match>
+	</match-list>
+</match>
+<match>
+	<mimetype>image/jpeg</mimetype>
+	<extension></extension>
+	<description>JPEG image data</description>
+	<test type="beshort" offset="0" length="" bitmask="" comparator="=">0xffd8</test>
+	<match-list>
+	<match>
+		<mimetype>b, JFIF standard</mimetype>
+		<extension></extension>
+		<description>b, JFIF standard</description>
+		<test type="string" offset="6" length="" bitmask="" comparator="=">JFIF</test>
+	</match>
+	<match>
+		<mimetype>b, EXIF standard</mimetype>
+		<extension></extension>
+		<description>b, EXIF standard</description>
+		<test type="string" offset="6" length="" bitmask="" comparator="=">Exif</test>
+	</match>
+	<match>
+		<mimetype>b, resolution (DPI)</mimetype>
+		<extension></extension>
+		<description>b, resolution (DPI)</description>
+		<test type="byte" offset="13" length="" bitmask="" comparator="=">1</test>
+	</match>
+	<match>
+		<mimetype>b, resolution (DPCM)</mimetype>
+		<extension></extension>
+		<description>b, resolution (DPCM)</description>
+		<test type="byte" offset="13" length="" bitmask="" comparator="=">2</test>
+	</match>
+	</match-list>
+</match>
+<match>
+	<mimetype>JPEG image data, HSI proprietary</mimetype>
+	<extension></extension>
+	<description>JPEG image data, HSI proprietary</description>
+	<test type="string" offset="0" length="" bitmask="" comparator="=">hsi1</test>
+</match>
+<!-- FIXME - invalid index errors working with regexes
+<match>
+	<mimetype>text/x-java</mimetype>
+	<extension>java</extension>
+	<description>Java source file</description>
+	<test offset="0" type="regex" comparator="=">/^\s*package/</test>
+</match>
+<match>
+	<mimetype>text/x-perl</mimetype>
+	<extension>pl</extension>
+	<description>Perl source file</description>
+	<test offset="0" type="regex" comparator="=">/^#!\/usr\/bin\/perl/</test>
+</match>
+<match>
+	<mimetype>text/x-c</mimetype>
+	<extension>c</extension>
+	<description>C source file</description>
+	<test offset="0" type="regex" comparator="=">/^#include/m</test>
+</match>
+<match>
+	<mimetype>application/x-sh</mimetype>
+	<extension>.sh</extension>
+	<description>sh script</description>
+	<test offset="0" type="regex" comparator="=">/^#!\/bin\/sh/</test>
+</match>
+<match>
+	<mimetype>application/x-bash</mimetype>
+	<extension>.sh</extension>
+	<description>bash script</description>
+	<test offset="0" type="regex" comparator="=">/^#!\/bin\/bash/</test>
+</match>
+<match>
+	<mimetype>application/x-csh</mimetype>
+	<extension>.sh</extension>
+	<description>csh script</description>
+	<test offset="0" type="regex" comparator="=">/^#!\/bin\/csh/</test>
+</match>
+<match>
+	<mimetype>application/x-ksh</mimetype>
+	<extension>.sh</extension>
+	<description>ksh script</description>
+	<test offset="0" type="regex" comparator="=">/^#!\/bin\/ksh/</test>
+</match>
+<match>
+	<mimetype>text/html</mimetype>
+	<extension>.html</extension>
+	<description>HTML Document</description>
+	<test offset="0" type="regex" comparator="=">/^\s*&lt;!DOCTYPE HTML PUBLIC/</test>
+</match>
+<match>
+	<mimetype>text/html</mimetype>
+	<extension>.html</extension>
+	<description>HTML Document</description>
+	<test offset="0" type="regex" comparator="=">/^\s*&lt;html&gt;/</test>
+</match>
+<match>
+	<mimetype>text/plain</mimetype>
+	<extension>.txt</extension>
+	<description>ASCII Text Document</description>
+	<test offset="0" type="regex" comparator="!">/[^[:ascii:][:space:]]/</test>
+</match>
+-->
+
+<!-- Microsoft Word documents -->
+<match>
+	<mimetype>application/msword</mimetype>
+	<extension>doc</extension>
+	<description>%s</description>
+	<test offset="2080" type="string" comparator="=">Microsoft Word 6.0 Document</test>
+</match>
+<match>
+	<mimetype>application/msword</mimetype>
+	<extension>doc</extension>
+	<description>Spanish Microsoft Word 6 document data</description>
+	<test offset="2080" type="string" comparator="=">Documento Microsoft Word 6</test>
+</match>
+<match>
+	<mimetype>application/msword</mimetype>
+	<extension>doc</extension>
+	<description>Microsoft Word document data</description>
+	<test offset="2112" type="string" comparator="=">MSWordDoc</test>
+</match>
+<match>
+	<mimetype>application/msword</mimetype>
+	<extension>doc</extension>
+	<description>Microsoft Word Document</description>
+	<test offset="0" type="belong" comparator="=">0x31be0000</test>
+</match>
+<match>
+	<mimetype>application/msword</mimetype>
+	<extension>doc</extension>
+	<description>Microsoft Word 6.0 Document</description>
+	<test offset="0" type="string" comparator="=">PO^Q`</test>
+</match>
+<match>
+	<mimetype>application/msword</mimetype>
+	<extension>doc</extension>
+	<description>Microsoft Office Document</description>
+	<test offset="0" type="string" comparator="=">\376\067\000\043</test>
+</match>
+<match>
+	<mimetype>application/msword</mimetype>
+	<extension>doc</extension>
+	<description>Microsoft Office Document</description>
+	<test offset="0" type="string" comparator="=">\320\317\021\340\241\261</test>
+</match>
+<match>
+	<mimetype>application/msword</mimetype>
+	<extension>doc</extension>
+	<description>Microsoft Office Document</description>
+	<test offset="0" type="string" comparator="=">\333\245-\000\000\000</test>
+</match>
+<match>
+	<mimetype>text/rtf</mimetype>
+	<extension></extension>
+	<description>Rich Text Format data</description>
+	<test type="string" offset="" length="" bitmask="" comparator="=">{\rtf</test>
+	<match-list>
+	<match>
+		<mimetype>version %c,</mimetype>
+		<extension></extension>
+		<description>version %c,</description>
+		<test type="byte" offset="5" length="" bitmask="" comparator="="></test>
+	</match>
+	<match>
+		<mimetype>ANSI</mimetype>
+		<extension></extension>
+		<description>ANSI</description>
+		<test type="string" offset="6" length="" bitmask="" comparator="=">\ansi</test>
+	</match>
+	<match>
+		<mimetype>Apple Macintosh</mimetype>
+		<extension></extension>
+		<description>Apple Macintosh</description>
+		<test type="string" offset="6" length="" bitmask="" comparator="=">\mac</test>
+	</match>
+	<match>
+		<mimetype>IBM PC, code page 437</mimetype>
+		<extension></extension>
+		<description>IBM PC, code page 437</description>
+		<test type="string" offset="6" length="" bitmask="" comparator="=">\pc</test>
+	</match>
+	<match>
+		<mimetype>IBM PS2, code page 850</mimetype>
+		<extension></extension>
+		<description>IBM PS2, code page 850</description>
+		<test type="string" offset="6" length="" bitmask="" comparator="=">\pca</test>
+	</match>
+	</match-list>
+</match>
+<match>
+	<mimetype>application/postscript</mimetype>
+	<extension>ps</extension>
+	<description>PostScript Level 2 program data</description>
+	<test offset="0" type="string" comparator="=">%!PS-Adobe-2.0</test>
+</match>
+<match>
+	<mimetype>text/plain</mimetype>
+	<extension>.txt</extension>
+	<description>ASCII Text Document</description>
+	<test offset="0" type="regex" comparator="!">/[^[:ascii:][:space:]]/</test>
+</match>
+</match-list>
+</magic>
+

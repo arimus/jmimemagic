@@ -1,0 +1,42 @@
+Changelog
+---------
+
+Changes since 0.1.1
+	* remove log4j.properties from jar file
+
+Changes since 0.1.0
+	* changes for target source level
+	* adjustment for maven 1.1
+	* project.xml cleanup
+	* documentation fixes
+	* various other types of cleanup
+
+Changes since 0.0.4a
+	* migrated build system to maven 1.x
+	* moved to subversion
+	* added hinting flag for file extensions hints
+	* ability to disable submatches for mime-only detection, which
+	*   which still needs work (e.g. submatch until a mime is found)
+	* content detection plugins now supported
+	* logging switched over to commons-logging
+	* cleaned up javadoc and enabled site generation
+	* misc other cleanup
+
+Changes since 0.0.3
+	* added more unit tests
+	* fixed sub-matches, adjusted magic.xml DTD
+	* new magic.xml file converted from unix magic file
+	* created testByte and testString from testByteArray
+	* testByte is now available and properly applies bitmask
+	* api reworking
+
+Changes since 0.0.2
+	* added junit tests
+	* removed UTF8 encoding from byte array to String conversions
+
+Changes since 0.0.1
+	* cleaned up a lot of the code
+	* added some mime types to the magic file
+	* have regexes available for magic detection
+	* misc other fixes
+

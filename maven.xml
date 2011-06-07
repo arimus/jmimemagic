@@ -1,0 +1,21 @@
+<project xmlns:maven="jelly:maven" 
+	xmlns:ant="jelly:ant" 
+	xmlns:j="jelly:core" 
+	xmlns:u="jelly:util" 
+	xmlns:artifact="artifact">
+
+	<goal name="run">
+    	<attainGoal name="jar:jar"/>
+
+		<echo message="Running ${class} ${args}"/>
+
+		<java fork="true" dir="${basedir}" classname="${class}">
+			<arg line="${args}"/>
+			<ant:classpath>
+				<ant:path refid="maven.dependency.classpath"/>
+				<ant:pathelement path="${target.dir}/classes"/>
+			</ant:classpath>
+		</java>
+	</goal>
+</project>
+

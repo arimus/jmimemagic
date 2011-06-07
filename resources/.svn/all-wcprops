@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svnroot/jmimemagic/!svn/ver/10/trunk/resources
+END
+magic.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/jmimemagic/!svn/ver/10/trunk/resources/magic.xml
+END
+magic.xml.basic
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/jmimemagic/!svn/ver/1/trunk/resources/magic.xml.basic
+END
+magic_1_0.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/jmimemagic/!svn/ver/1/trunk/resources/magic_1_0.dtd
+END
+log4j.properties
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/jmimemagic/!svn/ver/1/trunk/resources/log4j.properties
+END
+magic.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/jmimemagic/!svn/ver/1/trunk/resources/magic.dtd
+END
+template.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/jmimemagic/!svn/ver/1/trunk/resources/template.xml
+END
+magic.xml.verified
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/jmimemagic/!svn/ver/1/trunk/resources/magic.xml.verified
+END

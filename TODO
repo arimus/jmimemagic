@@ -1,0 +1,77 @@
+document the new properties concept
+
+in getProperties() for MagicMatch, return all the submatch properties as well
+
+need to fix all matchers that are currently invalid for one reason or another,
+possibly spitting out to the logs why they are invalid, which would help the
+process and anyone who happens to misconfigure a match in the magic.xml file
+
+need to convert the old magic file to the new magic file, enable validation
+
+fix sub-match detection (partially fixed, cleanup and add unit tests!!!)
+need to add more unit tests
+
+need to audit code and ensure that a properly crafted file can't be used to 
+	cause some security issues and/or system degredation (will always be a prob)
+
+make the regular expression syntax pluggable, so those who would rather a regex
+	style other than perl can have it their way
+
+files that have multiple matches based on the magic file
+	we can take the first match in one mode and return a collection of matches
+	in another.
+
+add in support for % variables in magic file, so that matched data can be used
+	in the description, printf style?
+
+	support a test token that is a placeholder for the data being able to be
+	any value and can then be used in a description for subtype.  Or find
+	another way to do this...via plugins???
+
+support for indirect offsets?
+
+support for &, ^ comparators
+
+support for multiple string encoding
+
+support which allows multiple matches at the same level to be combined for a 
+	full description
+
+Need to fix problems with some of the type detection.  Dates haven't really
+been worked on.
+
+Create a tool for analyzing repositories of multiple file types, which will
+help determine a proper file "tag" that uniquely identifies a file type.
+
+Possibly flesh out the magic file format.  Need support multiple tests to
+make a definitive determination of file type.
+
+Support some form of lexical parsing to determine valid source file from
+code snippets, etc?
+
+Lots of other stuff todo, just not listed yet.
+
+==== DONE ====
+
+flag to take hints from file extension as to which matches should be ran first?
+
+flag to run in MIME matching mode, no logic other than what is necessary to
+	to determine MIME type
+
+switch to commons-logging
+
+support for additional info map, allowing additional information to not be
+	displayed in the description, but be available.  For instance, MP3 file
+	ID3 tags could be made available for mp3 files
+* New properties now in matchers
+	basic: now have properties in the style <property name="" value=""/>
+	       possible for any match.  These will then be available in the
+		   returned MagicMatch as a java Map.  This way, descriptions for a
+		   match can be freeform such as "ID3 Tag", but you end up with
+		   id3=true as a key/value pair in the map and don't have to do a silly
+		   string test or assign a new mime type to the submatch.  This will
+		   also support plugins, allowing them to add new properties
+		   dynamically as needed for the match/submatch.
+
+add "plugin" match type by which data will be processed through a plugin for
+    complicated matches and assistance of third-party tools. (detectors)
