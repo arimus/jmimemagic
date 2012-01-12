@@ -1,0 +1,19 @@
+jMimeMagic
+Copyright 2003-2012 David Castro
+
+Contributions:
+  Thanks to the MMBase team (http://www.mmbase.org/) for doing the work of
+  creating the original basis for the XML version of the magic file.
+
+  To contribute code or other help, send an email to arimus@users.sourceforge.net
+  or submit patches/bug reports/etc on the jMimeMagic project page:
+
+      https://github.com/arimus/jmimemagic
+
+Developers:
+  David Castro <arimus@users.sourceforge.net>
+  Nate Jones <ndjones@users.sourceforge.net>
+
+Problems/questions/suggestions:
+  David Castro <arimus@user.sourceforge.net>
+
