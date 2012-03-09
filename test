@@ -1,3 +1,3 @@
 #!/bin/sh
 
-maven clean run -Dclass=net.sf.jmimemagic.Magic -Dargs=$1
+mvn exec:java -Dexec.mainClass="net.sf.jmimemagic.Magic" -Dexec.args="$1"
