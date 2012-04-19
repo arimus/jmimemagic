@@ -24,12 +24,13 @@ package net.sf.jmimemagic.detectors;
 
 import net.sf.jmimemagic.MagicDetector;
 
+import org.apache.commons.io.ByteOrderMark;
+import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.oro.text.perl.Perl5Util;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 import java.util.Map;
 
@@ -123,18 +124,25 @@ public class TextFileDetector implements MagicDetector
         Perl5Util util = new Perl5Util();
 
         try {
+            BOMInputStream bomIn = new BOMInputStream(new ByteArrayInputStream(data), ByteOrderMark.UTF_8, ByteOrderMark.UTF_16LE, ByteOrderMark.UTF_16BE);
+            if (bomIn.hasBOM()) {
+                return new String[] { "text/plain" };
+            }
+        } catch (IOException e) {
+            log.error("TextFileDetector: error detecting byte order mark");
+        }
+
+        try {
             String s = new String(data, "UTF-8");
 
             if (!util.match("/[^[:ascii:][:space:]]/", s)) {
                 return new String[] { "text/plain" };
             }
-
-            return null;
         } catch (UnsupportedEncodingException e) {
             log.error("TextFileDetector: failed to process data");
-
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -155,6 +163,18 @@ public class TextFileDetector implements MagicDetector
     {
         log.debug("processing file data");
 
-        return new String[] {  };
+        try {
+            BufferedInputStream is = new BufferedInputStream(new FileInputStream(file));
+
+            byte[] b = new byte[length];
+            int n = is.read(b, offset, length);
+            if (n > 0) {
+                return process(b, offset, length, bitmask, comparator, mimeType, params);
+            }
+        } catch (IOException e) {
+            log.error("TextFileDetector: error", e);
+        }
+
+        return null;
     }
 }
