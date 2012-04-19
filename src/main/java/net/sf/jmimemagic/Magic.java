@@ -451,9 +451,11 @@ public class Magic
      */
     public static void main(String[] args)
     {
-        //		Magic magic = new Magic();
         try {
-            //Magic.initialize();
+            if (args.length == 0) {
+                System.err.println("usage: test <file>");
+                System.exit(1);;
+            }
             File f = new File(args[0]);
 
             if (f.exists()) {
@@ -461,48 +463,6 @@ public class Magic
 
                 System.out.println("filename: " + args[0]);
                 printMagicMatch(System.out, match, "");
-
-                //				Collection submatches = match.getSubMatches();
-                //				if (match == null) {
-                //					System.out.println(args[0]+": unknown");
-                //				} else {
-                //					System.out.println("=============================");
-                //					System.out.println("filename: "+args[0]);
-                //					System.out.println("mime type: "+match.getMimeType());
-                //					System.out.println("description: "+match.getDescription());
-                //					System.out.println("extension: "+match.getExtension());
-                //					System.out.println("test: "+new String(match.getTest().array()));
-                //					System.out.println("bitmask: "+match.getBitmask());
-                //					System.out.println("offset: "+match.getOffset());
-                //					System.out.println("length: "+match.getLength());
-                //					System.out.println("type: "+match.getType());
-                //					System.out.println("comparator: "+match.getComparator());
-                //					System.out.println("=============================");
-                //
-                //					Iterator i = submatches.iterator();
-                //					while (i.hasNext()) {
-                //						System.out.println("== SUBMATCH =================");
-                //						MagicMatch m = (MagicMatch)i.next();
-                //						System.out.println(m.print());
-                //						System.out.println("=============================");
-                //					}
-                //				}
-
-                //				FileInputStream fis = new FileInputStream(f);
-                //				ByteBuffer buffer = ByteBuffer.allocate((int)f.length());
-                //				byte []buf = new byte[2048];
-                //				int size = 0;
-                //				while ((size = fis.read(buf, 0, 2048)) > 0) {
-                //					buffer.put(buf, 0, size);
-                //				}
-                //				byte []tmp = buffer.array();
-                //				match = parser.getMagicMatch(tmp);
-                //				if (match == null) {
-                //					System.out.println(args[0]+": unknown");
-                //				} else {
-                //					System.out.println(args[0]+": "+match.getDescription());
-                //					System.out.println(match.getMimeType());
-                //				}
             } else {
                 System.err.println("file '" + f.getCanonicalPath() + "' not found");
             }
