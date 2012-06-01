@@ -186,7 +186,10 @@ public class MagicMatcher implements Cloneable
             } else if (type.equals("string")) {
                 length = match.getTest().capacity();
             } else if (type.equals("regex")) {
-                length = (int) file.length() - offset;
+                
+                
+                final int matchLength = match.getLength();
+                length = (matchLength == 0) ? (int) file.length() - offset : matchLength;
 
                 if (length < 0) {
                     length = 0;
