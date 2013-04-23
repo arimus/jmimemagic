@@ -3494,5 +3494,11 @@
 	<description>net.sf.jmimemagic.detectors.TextFileDetector</description>
 	<test type="detector" offset="0" length="" bitmask="" comparator="=">net.sf.jmimemagic.detectors.TextFileDetector</test>
 </match>
+<match>
+	<mimetype>application/vnd.oasis.opendocument.text</mimetype>
+	<extension>odt</extension>
+	<description>Open Document Text</description>
+	<test offset="0" type="string" comparator="=">PK\003\004</test>
+</match>
 </match-list>
 </magic>
