@@ -19,6 +19,8 @@ public class MagicTest extends TestCase {
 	private static String javaClass14File = "test_docs/test_1.4.class";
 	private static String mp3_128_44_jstereoFile = "test_docs/test_128_44_jstereo.mp3";
 	private static String wavFile = "test_docs/test.wav";
+	private static String odtFile = "test_docs/test.odt";
+	private static String zipFile = "test_docs/test.zip";
 
 	public static void main(String args[]) {
 		junit.textui.TestRunner.run(MagicTest.class);
@@ -331,5 +333,46 @@ public class MagicTest extends TestCase {
 			e.printStackTrace();
 			fail("error in testWave(). message: " + e.getMessage());
 		}
+	}
+	public void testOdt(){
+		System.out.print("\ntesting ODT Document...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(odtFile), true, false);
+			if (match != null) {
+				assertEquals("application/vnd.oasis.opendocument.text", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testOdt()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testOdt(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testOdt(). message: " + e.getMessage());
+		}
+		
+	}
+	
+	public void testZip(){
+		System.out.print("\ntesting Zip File...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(zipFile), true, false);
+			if (match != null) {
+				assertEquals("application/zip", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testOdt()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testZip(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testZip(). message: " + e.getMessage());
+		}
+		
 	}
 }

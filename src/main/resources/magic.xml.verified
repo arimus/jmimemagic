@@ -499,6 +499,10 @@
 	<description>ASCII Text Document</description>
 	<test offset="0" type="regex" comparator="!">/[^[:ascii:][:space:]]/</test>
 </match>
+<match>
+	<mimetype>application/vnd.oasis.opendocument.text</mimetype>
+	<extension>odt</extension>
+	<description>Open Document Format</description>
+</match>
 </match-list>
 </magic>
-
