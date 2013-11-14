@@ -375,4 +375,23 @@ public class MagicTest extends TestCase {
 		}
 		
 	}
+	   
+    public void testSubMatches(){
+        System.out.print("\ntesting Submatches...");
+        try {
+            MagicMatch match = Magic.getMagicMatch(new File(gifFile), true, false);
+            Assert.assertEquals(3, match.getSubMatches().size());
+            match = Magic.getMagicMatch(new File(gifFile), true, false);
+            Assert.assertEquals(3, match.getSubMatches().size());           
+            System.out.print("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("exception in testSubMatches(). message: " + e);
+        } catch (Error e) {
+            e.printStackTrace();
+            fail("error in testSubMatches(). message: " + e.getMessage());
+        }
+        
+    }
+
 }
