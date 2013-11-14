@@ -238,14 +238,15 @@ public class MagicMatcher implements Cloneable
             MagicMatch submatch = null;
 
             if (testInternal(buf)) {
-                // set the top level match to this one
-            	 try {
- 					match = getMatch() != null? (MagicMatch)getMatch().clone():null;
- 				} catch (CloneNotSupportedException e) {
- 					//noop
- 				}
+				// set the top level match to this one
+				try {
+					match = getMatch() != null ? (MagicMatch) getMatch()
+							.clone() : null;
+				} catch (CloneNotSupportedException e) {
+					// noop
+				}
 
-                log.debug("test(File): testing matched '" + description + "'");
+				log.debug("test(File): testing matched '" + description + "'");
 
                 // set the data on this match
                 if ((onlyMimeMatch == false) && (subMatchers != null) && (subMatchers.size() > 0)) {
@@ -346,14 +347,15 @@ public class MagicMatcher implements Cloneable
             MagicMatch submatch = null;
 
             if (testInternal(buf)) {
-                // set the top level match to this one
-                try {
-					match = getMatch() != null? (MagicMatch)getMatch().clone():null;
+				// set the top level match to this one
+				try {
+					match = getMatch() != null ? (MagicMatch) getMatch()
+							.clone() : null;
 				} catch (CloneNotSupportedException e) {
-					//noop
+					// noop
 				}
 
-                log.debug("test(byte[]): testing matched '" + description + "'");
+				log.debug("test(byte[]): testing matched '" + description + "'");
 
                 // set the data on this match
                 if ((onlyMimeMatch == false) && (subMatchers != null) && (subMatchers.size() > 0)) {
