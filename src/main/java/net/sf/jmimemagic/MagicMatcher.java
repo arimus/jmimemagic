@@ -239,7 +239,12 @@ public class MagicMatcher implements Cloneable
 
             if (testInternal(buf)) {
                 // set the top level match to this one
-                match = getMatch();
+                try {
+                    match = getMatch() != null ? (MagicMatch) getMatch()
+                            .clone() : null;
+                } catch (CloneNotSupportedException e) {
+                    // noop
+                }
 
                 log.debug("test(File): testing matched '" + description + "'");
 
@@ -343,7 +348,12 @@ public class MagicMatcher implements Cloneable
 
             if (testInternal(buf)) {
                 // set the top level match to this one
-                match = getMatch();
+                try {
+                    match = getMatch() != null ? (MagicMatch) getMatch()
+                            .clone() : null;
+                } catch (CloneNotSupportedException e) {
+                    // noop
+                }
 
                 log.debug("test(byte[]): testing matched '" + description + "'");
 

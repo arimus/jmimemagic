@@ -400,9 +400,11 @@ public class MagicMatch implements Cloneable
         clone.setOffset(offset);
 
         // these properties should only be String types, so we shouldn't have to clone them
-        HashMap m = new HashMap();
-        m.putAll(properties);
-        clone.setProperties(m);
+        if(properties!= null) {
+	        HashMap m = new HashMap();
+	        m.putAll(properties);
+	        clone.setProperties(m);
+        }
 
         Iterator i = subMatches.iterator();
         ArrayList a = new ArrayList();
