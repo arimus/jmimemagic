@@ -774,7 +774,7 @@
 			<description>at least v2.0 to extract</description>
 			<test offset="4" type="byte" comparator="=">0x14</test>
 		</match>
-	</match-list>
+    </match-list>
 </match>
 <match>
 	<mimetype>???</mimetype>
@@ -3482,44 +3482,44 @@
 </match>
 <match>
 	<mimetype>application/x-sh</mimetype>
-	<extension>.sh</extension>
+	<extension>sh</extension>
 	<description>sh script</description>
 	<test offset="0" type="regex" comparator="=">/^#!\/bin\/sh/</test>
 </match>
 <match>
 	<mimetype>application/x-bash</mimetype>
-	<extension>.sh</extension>
+	<extension>sh</extension>
 	<description>bash script</description>
 	<test offset="0" type="regex" comparator="=">/^#!\/bin\/bash/</test>
 </match>
 <match>
 	<mimetype>application/x-csh</mimetype>
-	<extension>.sh</extension>
+	<extension>sh</extension>
 	<description>csh script</description>
 	<test offset="0" type="regex" comparator="=">/^#!\/bin\/csh/</test>
 </match>
 <match>
 	<mimetype>application/x-ksh</mimetype>
-	<extension>.sh</extension>
+	<extension>sh</extension>
 	<description>ksh script</description>
 	<test offset="0" type="regex" comparator="=">/^#!\/bin\/ksh/</test>
 </match>
 <match>
 	<mimetype>text/html</mimetype>
-	<extension>.html</extension>
+	<extension>html</extension>
 	<description>HTML Document</description>
 	<test offset="0" type="regex" comparator="=">/^\s*&lt;!DOCTYPE HTML PUBLIC/</test>
 </match>
 <match>
 	<mimetype>text/html</mimetype>
-	<extension>.html</extension>
+	<extension>html</extension>
 	<description>HTML Document</description>
 	<test offset="0" type="regex" comparator="=">/^\s*&lt;html&gt;/</test>
 </match>
 <!-- 
 <match>
 	<mimetype>text/plain</mimetype>
-	<extension>.txt</extension>
+	<extension>txt</extension>
 	<description>ASCII Text Document</description>
 	<test offset="0" type="regex" comparator="!">/[^[:ascii:][:space:]]/</test>
 </match>
