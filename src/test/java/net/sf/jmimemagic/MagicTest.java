@@ -8,9 +8,15 @@ public class MagicTest extends TestCase {
 	private static String pngFile = "test_docs/test.png";
 	private static String jpgFile = "test_docs/test.jpg";
 	private static String textFile = "test_docs/test.txt";
+	private static String officeOpenXmlDocumentFile = "test_docs/test_word.docx";
+	private static String officeOpenXmlDocumentFile2 = "test_docs/test_word.docm";
 	private static String word2KFile = "test_docs/test_word_2000.doc";
 	private static String word95File = "test_docs/test_word_6.0_95.doc";
 	private static String rtfFile = "test_docs/test.rtf";
+	private static String officeOpenXmlWorkbookFile = "test_docs/test_excel.xlsx";
+	private static String officeOpenXmlWorkbookFile2 = "test_docs/test_excel.xlsm";
+	private static String officeOpenXmlPresentationFile = "test_docs/test_powerpoint.pptx";
+	private static String officeOpenXmlPresentationFile2 = "test_docs/test_powerpoint.pptm";
 	private static String excel2KFile = "test_docs/test_excel_2000.xls";
 	private static String pdfFile = "test_docs/test.pdf";
 	private static String psFile = "test_docs/test.ps";
@@ -110,6 +116,46 @@ public class MagicTest extends TestCase {
 		}
 	}
 
+	public void testOfficeOpenXmlDocument() {
+		System.out.print("\ntesting Word Office Open XML Document...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(officeOpenXmlDocumentFile), true, false);
+			if (match != null) {
+				assertEquals("application/vnd.openxmlformats-officedocument.wordprocessingml.document", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testOfficeOpenXmlDocument()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testOfficeOpenXmlDocument(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testOfficeOpenXmlDocument(). message: " + e.getMessage());
+		}
+	}
+
+	public void testOfficeOpenXmlDocument2() {
+		System.out.print("\ntesting Word Office Open XML Document...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(officeOpenXmlDocumentFile2), true, false);
+			if (match != null) {
+				assertEquals("application/vnd.openxmlformats-officedocument.wordprocessingml.document", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testOfficeOpenXmlDocument2()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testOfficeOpenXmlDocument2(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testOfficeOpenXmlDocument2(). message: " + e.getMessage());
+		}
+	}
+
 	public void testWord2K() {
 		System.out.print("\ntesting Word 2000 Document...");
 		try {
@@ -170,6 +216,46 @@ public class MagicTest extends TestCase {
 		}
 	}
 
+	public void testOfficeOpenXmlWorkbook() {
+		System.out.print("\ntesting Word Office Open XML Workbook...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(officeOpenXmlWorkbookFile), true, false);
+			if (match != null) {
+				assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testOfficeOpenXmlWorkbook()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testOfficeOpenXmlWorkbook(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testOfficeOpenXmlWorkbook(). message: " + e.getMessage());
+		}
+	}
+
+	public void testOfficeOpenXmlWorkbook2() {
+		System.out.print("\ntesting Word Office Open XML Workbook...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(officeOpenXmlWorkbookFile2), true, false);
+			if (match != null) {
+				assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testOfficeOpenXmlWorkbook2()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testOfficeOpenXmlWorkbook2(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testOfficeOpenXmlWorkbook2(). message: " + e.getMessage());
+		}
+	}
+    
 	public void testExcel2K() {
 		System.out.print("\ntesting Excel 2000 Document...");
 		try {
@@ -187,6 +273,47 @@ public class MagicTest extends TestCase {
 		} catch (Error e) {
 			e.printStackTrace();
 			fail("error in testExcel2K(). message: " + e.getMessage());
+		}
+	}
+
+
+	public void testOfficeOpenXmlPresentation() {
+		System.out.print("\ntesting Word Office Open XML Presentation...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(officeOpenXmlPresentationFile), true, false);
+			if (match != null) {
+				assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testOfficeOpenXmlPresentation()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testOfficeOpenXmlPresentation(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testOfficeOpenXmlPresentation(). message: " + e.getMessage());
+		}
+	}
+
+	public void testOfficeOpenXmlPresentation2() {
+		System.out.print("\ntesting Word Office Open XML Presentation...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(officeOpenXmlPresentationFile2), true, false);
+			if (match != null) {
+				assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testOfficeOpenXmlPresentation2()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testOfficeOpenXmlPresentation2(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testOfficeOpenXmlPresentation2(). message: " + e.getMessage());
 		}
 	}
 
