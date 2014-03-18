@@ -28,7 +28,7 @@ Requirements:
   Xerces 2.4.0 (optional)
 
 Building:
-  type 'maven clean jar'
+  type 'mvn clean jar:jar'
 
   should have your jar file in ./target
 
