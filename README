@@ -1,5 +1,5 @@
-jMimeMagic (TM) v0.1.2
-Copyright (C) 2003-2012, David Castro
+jMimeMagic (TM) v0.1.3
+Copyright (C) 2003-2014, David Castro
 Contact:  David Castro <arimus@users.sourceforge.net>
 
 jMimeMagic is a Java library for determining the MIME type of files or streams.
