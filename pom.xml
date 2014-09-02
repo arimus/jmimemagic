@@ -43,13 +43,13 @@
     <repository>
       <id>jmimemagic-repo</id>
       <name>jMimeMagic Repo</name>
-      <url>scm:svn:https://svn.sourceforge.net/svnroot/jmimemagic/trunk</url>
+      <url>scm:git:git@github.com:arimus/jmimemagic.git</url>
     </repository>
     <!-- use the following if you ARE using a snapshot version. -->
     <snapshotRepository>
       <id>jmimemagic-repo</id>
       <name>jMimeMagic Repo</name>
-      <url>scm:svn:https://svn.sourceforge.net/svnroot/jmimemagic/trunk</url>
+      <url>scm:git:git@github.com:arimus/jmimemagic.git</url>
     </snapshotRepository>
   </distributionManagement>
 
