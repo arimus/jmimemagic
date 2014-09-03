@@ -7,7 +7,7 @@
   
   <groupId>net.sf.jmimemagic</groupId>
   <artifactId>jmimemagic</artifactId>
-  <version>0.1.3-SNAPSHOT</version>
+  <version>0.1.3</version>
   <packaging>jar</packaging>
 
   <name>jMimeMagic</name>
@@ -41,15 +41,15 @@
   <!-- use the following if you're not using a snapshot version. -->
   <distributionManagement>
     <repository>
-      <id>jmimemagic-repo</id>
+      <id>ossrh</id>
       <name>jMimeMagic Repo</name>
-      <url>scm:git:git@github.com:arimus/jmimemagic.git</url>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
     <!-- use the following if you ARE using a snapshot version. -->
     <snapshotRepository>
-      <id>jmimemagic-repo</id>
+      <id>ossrh</id>
       <name>jMimeMagic Repo</name>
-      <url>scm:git:git@github.com:arimus/jmimemagic.git</url>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -114,6 +114,7 @@
           <include>*.properties</include>
           <include>*.xml</include>
           <include>*.dtd</include>
+          <include>*.json</include>
         </includes>
         <excludes>
           <exclude>log4j.properties</exclude>
@@ -175,16 +176,25 @@
         </configuration>
       </plugin>
 
-      <!--
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.2.1</version>
       </plugin>
-      -->
+
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.2</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
 
     </plugins>
-
 
     <extensions>
 
@@ -264,6 +274,25 @@
 	  <version>2.0.2</version>
 	  <scope>compile</scope>
 	</dependency>
+
+<!--    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.3</version>
+      <scope>compile</scope>
+    </dependency>-->
+
+    <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-jaxrs</artifactId>
+        <version>1.5.2</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-xc</artifactId>
+        <version>1.5.2</version>
+    </dependency>
 
   </dependencies>
 
