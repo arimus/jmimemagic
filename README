@@ -46,6 +46,17 @@ Testing:
   - or - simply ./test <file to test> in a unix shell
   (this is similar to the 'file' command in *nix)
 
+Maven:
+
+  To add jMimeMagic as a dependency in a Maven project, you can use the
+  following in the dependencies section of your pom.xml.
+
+  <dependency>
+      <groupId>net.sf.jmimemagic</groupId>
+      <artifactId>jmimemagic</artifactId>
+      <version>0.1.3</version>
+  </dependency>
+
 Contributions:
   Thanks to the MMBase team (http://www.mmbase.org/) for doing the work of
   creating the original basis for the XML version of the magic file.
