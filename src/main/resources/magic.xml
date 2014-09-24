@@ -1359,16 +1359,28 @@
 	<test offset="0" type="string" comparator="=">IIN1</test>
 </match>
 <match>
-	<mimetype>???</mimetype>
-	<extension>???</extension>
-	<description>image data, big-endian</description>
-	<test offset="0" type="string" comparator="=">MM\000*TIFF</test>
+    <mimetype>image/tiff</mimetype>
+	<extension>tif</extension>
+	<description>TIFF image data, big-endian</description>
+	<test offset="0" type="string" comparator="=">MM\000\052</test>
 </match>
 <match>
-	<mimetype>???</mimetype>
-	<extension>???</extension>
-	<description>image data, little-endian</description>
-	<test offset="0" type="string" comparator="=">II*\000TIFF</test>
+    <mimetype>image/tiff</mimetype>
+    <extension>tif</extension>
+	<description>TIFF image data, little-endian</description>
+	<test offset="0" type="string" comparator="=">II\052\000</test>
+</match>
+<match>
+    <mimetype>image/tiff</mimetype>
+	<extension>tiff</extension>
+	<description>TIFF image data, big-endian</description>
+	<test offset="0" type="string" comparator="=">MM\000\052</test>
+</match>
+<match>
+    <mimetype>image/tiff</mimetype>
+    <extension>tiff</extension>
+	<description>TIFF image data, little-endian</description>
+	<test offset="0" type="string" comparator="=">II\052\000</test>
 </match>
 <match>
 	<mimetype>image/png</mimetype>

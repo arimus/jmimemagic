@@ -6,6 +6,7 @@ import java.io.File;
 public class MagicTest extends TestCase {
 	private static String gifFile = "test_docs/test.gif";
 	private static String pngFile = "test_docs/test.png";
+	private static String tifFile = "test_docs/test_nocompress.tif";
 	private static String jpgFile = "test_docs/test.jpg";
 	private static String textFile = "test_docs/test.txt";
 	private static String officeOpenXmlDocumentFile = "test_docs/test_word.docx";
@@ -71,6 +72,26 @@ public class MagicTest extends TestCase {
 		} catch (Error e) {
 			e.printStackTrace();
 			fail("error in testPNG(). message: " + e.getMessage());
+		}
+	}
+
+	public void testTIF() {
+		System.out.print("\ntesting TIF image...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(tifFile), true, false);
+			if (match != null) {
+				assertEquals("image/tiff", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testTIF()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testTIF(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testTIF(). message: " + e.getMessage());
 		}
 	}
 
