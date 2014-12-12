@@ -5,6 +5,8 @@ Changes since 0.1.2
 	* changing license over to the Apache license, retro-active to 
 	  0.1.2, since I don't want anyone to have to fetch a new package
 	  for a simple license change.
+	* sonatype fixes
+	* TIFF additions
 
 Changes since 0.1.1
 	* remove log4j.properties from jar file
