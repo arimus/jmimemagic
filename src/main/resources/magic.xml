@@ -2882,13 +2882,7 @@
 	<mimetype>text/html</mimetype>
 	<extension>html</extension>
 	<description>HTML document text</description>
-	<test offset="0" type="string" comparator="=">&lt;!DOCTYPE HTML</test>
-</match>
-<match>
-	<mimetype>text/html</mimetype>
-	<extension>html</extension>
-	<description>HTML document text</description>
-	<test offset="0" type="string" comparator="=">&lt;!doctype html</test>
+	<test offset="0" type="regex" comparator="=">/^\s*&lt;!DOCTYPE HTML/i</test>
 </match>
 <match>
 	<mimetype>text/html</mimetype>
