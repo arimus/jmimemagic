@@ -24,7 +24,6 @@ package net.sf.jmimemagic;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
@@ -37,9 +36,9 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.ByteArrayOutputStream;
-
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.ByteBuffer;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -53,7 +52,6 @@ import java.util.HashMap;
   */
 public class MagicParser extends DefaultHandler implements ContentHandler, ErrorHandler
 {
-    private static String magicFile = "/magic.xml";
     private static Log log = LogFactory.getLog(MagicParser.class);
 
     // Namespaces feature id (http://xml.org/sax/features/namespaces).
@@ -102,13 +100,13 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
     {
         log.debug("instantiated");
     }
-
+    
     /**
-     * parse the xml file and create our MagicMatcher object list
+     * parse the provided xml and create our MagicMatcher object list
      *
      * @throws MagicParseException DOCUMENT ME!
      */
-    public synchronized void initialize()
+    public synchronized void initialize(URL magicXmlUrl)
         throws MagicParseException
     {
         boolean namespaces = DEFAULT_NAMESPACES;
@@ -166,17 +164,13 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
             parser.setErrorHandler(this);
             parser.setContentHandler(this);
 
+            // set resolver for DTD
+            parser.setEntityResolver(new MagicDtdResolver());
+            
             // parse file
             try {
-                // get the magic file URL
-                String magicURL = MagicParser.class.getResource(magicFile).toString();
 
-                if (magicURL == null) {
-                    log.error("initialize(): couldn't load '" + magicURL + "'");
-                    throw new MagicParseException("couldn't load '" + magicURL + "'");
-                }
-
-                parser.parse(magicURL);
+                parser.parse(magicXmlUrl.toString());
             } catch (SAXParseException e) {
                 // ignore
             } catch (Exception e) {
