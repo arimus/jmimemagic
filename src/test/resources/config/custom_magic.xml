@@ -2,11 +2,20 @@
 <!DOCTYPE magic PUBLIC "-//jmimemagic//DTD magic config 1.0//EN" "magic_1_0.dtd">
 <magic>
 <info>
-<version>0.2</version>
-<author>dcastro</author>
+<version>custom</version>
+<author>abaudet</author>
 <description>magic file</description>
 </info>
 <match-list>
+<match>
+	<mimetype>text/custom</mimetype>
+	<extension></extension>
+	<description>Hello World</description>
+	<test type="string" offset="0" length="" bitmask="" comparator="=">Hello world</test>
+</match>
+
+
+
 <match>
 	<mimetype>audio/mp3</mimetype>
 	<extension></extension>

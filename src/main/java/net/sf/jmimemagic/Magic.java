@@ -28,7 +28,7 @@ import org.apache.commons.logging.LogFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,6 +43,7 @@ import java.util.Iterator;
  */
 public class Magic
 {
+    private static String magicFile = "/magic.xml";
     private static Log log = LogFactory.getLog(Magic.class);
     private static boolean initialized = false;
     private static MagicParser magicParser = null;
@@ -51,7 +52,7 @@ public class Magic
     /**
      * constructor
      */
-    public Magic()
+    private Magic()
     {
         log.debug("instantiated");
     }
@@ -82,12 +83,36 @@ public class Magic
     public static synchronized void initialize()
         throws MagicParseException
     {
+        // get the magic file URL
+        URL magicURL = MagicParser.class.getResource(magicFile);
+
+        if (magicURL == null) {
+            log.error("initialize(): couldn't load '" + magicURL + "'");
+            throw new MagicParseException("couldn't load '" + magicURL + "'");
+        }
+        
+        initialize(magicURL);
+     }
+
+    public static synchronized void reset() {
+    	initialized = false;
+    	hintMap.clear();
+    }
+    
+   /**
+     * create a parser and initialize it with the provided match configuration XML
+     *
+     * @throws MagicParseException DOCUMENT ME!
+     */
+    public static synchronized void initialize(URL magicXmlUrl)
+        throws MagicParseException
+    {
         log.debug("initialize()");
 
         if (!initialized) {
             log.debug("initializing");
             magicParser = new MagicParser();
-            magicParser.initialize();
+            magicParser.initialize(magicXmlUrl);
 
             // build hint map
             Iterator i = magicParser.getMatchers().iterator();
