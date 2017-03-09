@@ -176,8 +176,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.7</source>
+          <target>1.7</target>
         </configuration>
       </plugin>
 
@@ -304,52 +304,12 @@
       <scope>test</scope>
     </dependency>
 
-	<dependency>
-	  <groupId>oro</groupId>
-	  <artifactId>oro</artifactId>
-	  <version>2.0.8</version>
-	  <scope>compile</scope>
-    </dependency>
-
-	<dependency>
-	  <groupId>xerces</groupId>
-	  <artifactId>xercesImpl</artifactId>
-	  <version>2.4.0</version>
-	  <scope>runtime</scope>
-	</dependency>
-
-	<dependency>
-	  <groupId>xml-apis</groupId>
-	  <artifactId>xml-apis</artifactId>
-	  <version>1.0.b2</version>
-	  <scope>compile</scope>
-	</dependency>
-
-	<dependency>
-	  <groupId>xml-apis</groupId>
-	  <artifactId>xmlParserAPIs</artifactId>
-	  <version>2.0.2</version>
-	  <scope>compile</scope>
-	</dependency>
-
 <!--    <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
       <version>1.4.3</version>
       <scope>compile</scope>
     </dependency>-->
-
-    <dependency>
-        <groupId>org.codehaus.jackson</groupId>
-        <artifactId>jackson-jaxrs</artifactId>
-        <version>1.5.2</version>
-    </dependency>
-
-    <dependency>
-        <groupId>org.codehaus.jackson</groupId>
-        <artifactId>jackson-xc</artifactId>
-        <version>1.5.2</version>
-    </dependency>
 
   </dependencies>
 

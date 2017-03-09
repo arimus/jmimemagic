@@ -24,7 +24,6 @@ package net.sf.jmimemagic;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.oro.text.perl.Perl5Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +35,8 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
 
 
 /**
@@ -47,7 +48,7 @@ import java.util.Iterator;
 public class MagicMatcher implements Cloneable
 {
     private static Log log = LogFactory.getLog(MagicMatcher.class);
-    private ArrayList subMatchers = new ArrayList(0);
+    private List<MagicMatcher> subMatchers = new ArrayList<>(0);
     private MagicMatch match = null;
 
     /** 
@@ -125,7 +126,7 @@ public class MagicMatcher implements Cloneable
      *
      * @param a a collection of submatches
      */
-    public void setSubMatchers(Collection a)
+    public void setSubMatchers(Collection<MagicMatcher> a)
     {
         log.debug("setSubMatchers(): for match '" + match.getDescription() + "'");
         subMatchers.clear();
@@ -137,7 +138,7 @@ public class MagicMatcher implements Cloneable
      *
      * @return a collection of submatches
      */
-    public Collection getSubMatchers()
+    public Collection<MagicMatcher> getSubMatchers()
     {
         log.debug("getSubMatchers()");
 
@@ -163,7 +164,6 @@ public class MagicMatcher implements Cloneable
         int offset = match.getOffset();
         String description = match.getDescription();
         String type = match.getType();
-        String mimeType = match.getMimeType();
 
         log.debug("test(File): testing '" + f.getName() + "' for '" + description + "'");
 
@@ -669,17 +669,16 @@ public class MagicMatcher implements Cloneable
         String test = new String(match.getTest().array());
         char comparator = match.getComparator();
 
-        Perl5Util utility = new Perl5Util();
         log.debug("testRegex(): searching for '" + test + "'");
 
         if (comparator == '=') {
-            if (utility.match(test, text)) {
+            if (Pattern.matches(test, text)) {
                 return true;
             } else {
                 return false;
             }
         } else if (comparator == '!') {
-            if (utility.match(test, text)) {
+            if (Pattern.matches(test, text)) {
                 return false;
             } else {
                 return true;
@@ -705,7 +704,7 @@ public class MagicMatcher implements Cloneable
         try {
             log.debug("loading class: " + detectorClass);
 
-            Class c = Class.forName(detectorClass);
+            Class<?> c = Class.forName(detectorClass);
             MagicDetector detector = (MagicDetector) c.newInstance();
             String[] types = detector.process(data.array(), match.getOffset(), match.getLength(),
                     match.getBitmask(), match.getComparator(), match.getMimeType(),
@@ -742,7 +741,7 @@ public class MagicMatcher implements Cloneable
         try {
             log.debug("loading class: " + detectorClass);
 
-            Class c = Class.forName(detectorClass);
+            Class<?> c = Class.forName(detectorClass);
             MagicDetector detector = (MagicDetector) c.newInstance();
 
             return detector.getHandledTypes();
@@ -807,15 +806,15 @@ public class MagicMatcher implements Cloneable
      *
      * @throws CloneNotSupportedException DOCUMENT ME!
      */
-    protected Object clone()
+    protected MagicMatcher clone()
         throws CloneNotSupportedException
     {
         MagicMatcher clone = new MagicMatcher();
 
         clone.setMatch((MagicMatch) match.clone());
 
-        Iterator i = subMatchers.iterator();
-        ArrayList sub = new ArrayList();
+        Iterator<MagicMatcher> i = subMatchers.iterator();
+        List<MagicMatcher> sub = new ArrayList<>();
 
         while (i.hasNext()) {
             MagicMatcher m = (MagicMatcher) i.next();
