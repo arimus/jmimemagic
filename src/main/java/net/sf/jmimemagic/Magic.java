@@ -48,7 +48,7 @@ public class Magic
     private static Log log = LogFactory.getLog(Magic.class);
     private static boolean initialized = false;
     private static MagicParser magicParser = null;
-    private static Map<String,List<MagicMatcher>> hintMap = new HashMap<>();
+    private static Map<String,List<MagicMatcher>> hintMap = new HashMap<String, List<MagicMatcher>>();
 
     /**
      * constructor
@@ -70,7 +70,7 @@ public class Magic
             List<MagicMatcher> a = hintMap.get(extension);
             a.add(matcher);
         } else {
-        	List<MagicMatcher> a = new ArrayList<>();
+        	List<MagicMatcher> a = new ArrayList<MagicMatcher>();
             a.add(matcher);
             hintMap.put(extension, a);
         }
@@ -139,7 +139,7 @@ public class Magic
         }
 
         Iterator<MagicMatcher> i = magicParser.getMatchers().iterator();
-        List<MagicMatcher> m = new ArrayList<>();
+        List<MagicMatcher> m = new ArrayList<MagicMatcher>();
 
         while (i.hasNext()) {
             MagicMatcher matcher = (MagicMatcher) i.next();
@@ -270,7 +270,7 @@ public class Magic
         MagicMatch match = null;
 
         // check for extension hints
-        List<MagicMatcher> checked = new ArrayList<>();
+        List<MagicMatcher> checked = new ArrayList<MagicMatcher>();
 
         if (extensionHints) {
             log.debug("trying to use hints first");

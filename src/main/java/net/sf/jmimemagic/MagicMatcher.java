@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
 public class MagicMatcher implements Cloneable
 {
     private static Log log = LogFactory.getLog(MagicMatcher.class);
-    private List<MagicMatcher> subMatchers = new ArrayList<>(0);
+    private List<MagicMatcher> subMatchers = new ArrayList<MagicMatcher>(0);
     private MagicMatch match = null;
 
     /** 
@@ -814,7 +814,7 @@ public class MagicMatcher implements Cloneable
         clone.setMatch((MagicMatch) match.clone());
 
         Iterator<MagicMatcher> i = subMatchers.iterator();
-        List<MagicMatcher> sub = new ArrayList<>();
+        List<MagicMatcher> sub = new ArrayList<MagicMatcher>();
 
         while (i.hasNext()) {
             MagicMatcher m = (MagicMatcher) i.next();

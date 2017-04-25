@@ -57,7 +57,7 @@ public class MagicMatch implements Cloneable
     private String type = "";
     private long bitmask = 0xFFFFFFFFL;
     private char comparator = '\0';
-    private List<MagicMatch> subMatches = new ArrayList<>(0);
+    private List<MagicMatch> subMatches = new ArrayList<MagicMatch>(0);
     private Map<String,String> properties;
 
     /** 
@@ -402,13 +402,13 @@ public class MagicMatch implements Cloneable
 
         // these properties should only be String types, so we shouldn't have to clone them
         if(properties!= null) {
-	        Map<String,String> m = new HashMap<>();
+	        Map<String,String> m = new HashMap<String, String>();
 	        m.putAll(properties);
 	        clone.setProperties(m);
         }
 
         Iterator<MagicMatch> i = subMatches.iterator();
-        List<MagicMatch> a = new ArrayList<>();
+        List<MagicMatch> a = new ArrayList<MagicMatch>();
 
         while (i.hasNext()) {
             MagicMatch mm = i.next();

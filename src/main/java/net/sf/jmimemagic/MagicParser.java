@@ -86,8 +86,8 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
     protected static final boolean DEFAULT_SCHEMA_FULL_CHECKING = false;
     private boolean initialized = false;
     private XMLReader parser = null;
-    private List<MagicMatcher> stack = new ArrayList<>();
-    private Collection<MagicMatcher> matchers = new ArrayList<>();
+    private List<MagicMatcher> stack = new ArrayList<MagicMatcher>();
+    private Collection<MagicMatcher> matchers = new ArrayList<MagicMatcher>();
     private MagicMatcher matcher = null;
     private MagicMatch match = null;
     private Map<String,String> properties = null;
@@ -359,7 +359,7 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
                 // save the property to our map
                 if ((name != null) && (value != null)) {
                     if (properties == null) {
-                        properties = new HashMap<>();
+                        properties = new HashMap<String, String>();
                     }
 
                     if (!properties.containsKey(name)) {
