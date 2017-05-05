@@ -37,12 +37,14 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.ByteArrayOutputStream;
-
+import java.net.URL;
 import java.nio.ByteBuffer;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -84,11 +86,11 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
     protected static final boolean DEFAULT_SCHEMA_FULL_CHECKING = false;
     private boolean initialized = false;
     private XMLReader parser = null;
-    private ArrayList stack = new ArrayList();
-    private Collection matchers = new ArrayList();
+    private List<MagicMatcher> stack = new ArrayList<MagicMatcher>();
+    private Collection<MagicMatcher> matchers = new ArrayList<MagicMatcher>();
     private MagicMatcher matcher = null;
     private MagicMatch match = null;
-    private HashMap properties = null;
+    private Map<String,String> properties = null;
     private String finalValue = "";
     private boolean isMimeType = false;
     private boolean isExtension = false;
@@ -169,7 +171,8 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
             // parse file
             try {
                 // get the magic file URL
-                String magicURL = MagicParser.class.getResource(magicFile).toString();
+                URL resource = MagicParser.class.getResource(magicFile);
+				String magicURL = resource.toString();
 
                 if (magicURL == null) {
                     log.error("initialize(): couldn't load '" + magicURL + "'");
@@ -193,7 +196,7 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
      *
      * @return DOCUMENT ME!
      */
-    public Collection getMatchers()
+    public Collection<MagicMatcher> getMatchers()
     {
         return matchers;
     }
@@ -356,7 +359,7 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
                 // save the property to our map
                 if ((name != null) && (value != null)) {
                     if (properties == null) {
-                        properties = new HashMap();
+                        properties = new HashMap<String, String>();
                     }
 
                     if (!properties.containsKey(name)) {
@@ -519,9 +522,6 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
     {
         int beg = 0;
         int end = 0;
-        int c1;
-        int c2;
-        int c3;
         int chr;
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
 

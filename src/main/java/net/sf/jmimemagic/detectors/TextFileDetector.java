@@ -25,14 +25,15 @@ package net.sf.jmimemagic.detectors;
 import net.sf.jmimemagic.MagicDetector;
 
 import org.apache.commons.io.ByteOrderMark;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.oro.text.perl.Perl5Util;
 
 import java.io.*;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 /**
@@ -117,25 +118,26 @@ public class TextFileDetector implements MagicDetector
      * @return DOCUMENT ME!
      */
     public String[] process(byte[] data, int offset, int length, long bitmask, char comparator,
-        String mimeType, Map params)
+        String mimeType, Map<String,String> params)
     {
         log.debug("processing stream data");
 
-        Perl5Util util = new Perl5Util();
-
+        BOMInputStream bomIn = null;
         try {
-            BOMInputStream bomIn = new BOMInputStream(new ByteArrayInputStream(data), ByteOrderMark.UTF_8, ByteOrderMark.UTF_16LE, ByteOrderMark.UTF_16BE);
+            bomIn = new BOMInputStream(new ByteArrayInputStream(data), ByteOrderMark.UTF_8, ByteOrderMark.UTF_16LE, ByteOrderMark.UTF_16BE);
             if (bomIn.hasBOM()) {
                 return new String[] { "text/plain" };
             }
         } catch (IOException e) {
             log.error("TextFileDetector: error detecting byte order mark");
+        } finally {
+        	IOUtils.closeQuietly(bomIn);
         }
 
         try {
             String s = new String(data, "UTF-8");
 
-            if (!util.match("/[^[:ascii:][:space:]]/", s)) {
+            if (!Pattern.matches("/[^[:ascii:][:space:]]/", s)) {
                 return new String[] { "text/plain" };
             }
         } catch (UnsupportedEncodingException e) {
@@ -159,12 +161,13 @@ public class TextFileDetector implements MagicDetector
      * @return DOCUMENT ME!
      */
     public String[] process(File file, int offset, int length, long bitmask, char comparator,
-        String mimeType, Map params)
+        String mimeType, Map<String,String> params)
     {
         log.debug("processing file data");
 
+        BufferedInputStream is =null;
         try {
-            BufferedInputStream is = new BufferedInputStream(new FileInputStream(file));
+            is = new BufferedInputStream(new FileInputStream(file));
 
             byte[] b = new byte[length];
             int n = is.read(b, offset, length);
@@ -173,6 +176,8 @@ public class TextFileDetector implements MagicDetector
             }
         } catch (IOException e) {
             log.error("TextFileDetector: error", e);
+        } finally {
+        	IOUtils.closeQuietly(is);
         }
 
         return null;
