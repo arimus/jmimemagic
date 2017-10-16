@@ -2927,6 +2927,18 @@
 	<test offset="0" type="string" comparator="=">&lt;HTML</test>
 </match>
 <match>
+	<mimetype>text/xml</mimetype>
+	<extension>xml</extension>
+	<description>XML document text</description>
+	<test offset="0" type="string" comparator="=">&lt;?xml version</test>
+</match>
+<match>
+	<mimetype>text/xml</mimetype>
+	<extension>xml</extension>
+	<description>DocBook XML document text</description>
+	<test offset="0" type="string" comparator="=">-//OASIS//DTD DocBook XML</test>
+</match>
+<match>
 	<mimetype>text/sgml</mimetype>
 	<extension>sgml</extension>
 	<description>exported SGML document text</description>

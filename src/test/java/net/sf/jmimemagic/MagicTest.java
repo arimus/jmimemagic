@@ -28,6 +28,9 @@ public class MagicTest extends TestCase {
 	private static String wavFile = "test_docs/test.wav";
 	private static String odtFile = "test_docs/test.odt";
 	private static String zipFile = "test_docs/test.zip";
+	private static String xmlFile = "test_docs/test.xml";
+	private static String docBookXmlFile = "test_docs/testDocBook.xml";
+	
 
 	public static void main(String args[]) {
 		junit.textui.TestRunner.run(MagicTest.class);
@@ -541,5 +544,45 @@ public class MagicTest extends TestCase {
         }
         
     }
+    
+	public void testXmlDocument() {
+		System.out.print("\ntesting Default XML Document...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(xmlFile), true, false);
+			if (match != null) {
+				assertEquals("text/xml", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testXmlDocument()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testXmlDocument(). message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testXmlDocument(). message: " + e.getMessage());
+		}
+	}
+
+	public void testDocBookDocument() {
+		System.out.print("\ntesting DocBook XML Document...");
+		try {
+			MagicMatch match = Magic.getMagicMatch(new File(docBookXmlFile), true, false);
+			if (match != null) {
+				assertEquals("text/xml", match.getMimeType());
+			} else {
+				System.out.print("failed");
+				fail("no match in testDocBookDocument()");
+			}
+			System.out.print("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("exception in testDocBookDocument. message: " + e);
+		} catch (Error e) {
+			e.printStackTrace();
+			fail("error in testDocBookDocument(). message: " + e.getMessage());
+		}
+	}
 
 }
