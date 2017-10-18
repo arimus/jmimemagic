@@ -751,6 +751,22 @@
 	<test offset="0" type="string" comparator="=">PK\003\004</test>
 	<match-list>
 		<match>
+			<mimetype></mimetype>
+			<extension>docx</extension>
+			<property name="office-type" value="word" />
+			<description>net.sf.jmimemagic.detectors.OfficeXFileDetector</description>
+			<test type="detector" offset="0" length="" bitmask=""
+				comparator="=">net.sf.jmimemagic.detectors.OfficeXFileDetector</test>
+		</match>
+		<match>
+			<mimetype></mimetype>
+			<extension>xlsx</extension>
+			<property name="office-type" value="excel" />
+			<description>net.sf.jmimemagic.detectors.OfficeXFileDetector</description>
+			<test type="detector" offset="0" length="" bitmask=""
+				comparator="=">net.sf.jmimemagic.detectors.OfficeXFileDetector</test>
+		</match>	
+		<match>
 			<mimetype>application/zip</mimetype>
 			<extension>zip</extension>
 			<description>at least v0.9 to extract</description>

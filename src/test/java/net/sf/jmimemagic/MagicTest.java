@@ -28,7 +28,9 @@ public class MagicTest extends TestCase {
 	private static String wavFile = "test_docs/test.wav";
 	private static String odtFile = "test_docs/test.odt";
 	private static String zipFile = "test_docs/test.zip";
-
+    private static String docxFile = "test_docs/docxFile.unknown";
+    private static String xlsxFile = "test_docs/xlsxFile.unknown";
+    
 	public static void main(String args[]) {
 		junit.textui.TestRunner.run(MagicTest.class);
 	}
@@ -541,5 +543,57 @@ public class MagicTest extends TestCase {
         }
         
     }
+    
+    public void testDocx(){
+        System.out.print("\ntesting Docx File...");
+        try {
+            MagicMatch match = Magic.getMagicMatch(new File(docxFile), true, false);
+            match=findConrecteMatch(match);
+            if (match != null) {
+                assertEquals("application/vnd.openxmlformats-officedocument.wordprocessingml.document", match.getMimeType());
+            } else {
+                System.out.print("failed");
+                fail("no match in testDocx()");
+            }
+            System.out.print("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("exception in testDocx(). message: " + e);
+        } catch (Error e) {
+            e.printStackTrace();
+            fail("error in testDocx(). message: " + e.getMessage());
+        }
+    }
+   
+    public void testXlsx(){
+        System.out.print("\ntesting Xlsx File...");
+        try {
+            MagicMatch match = Magic.getMagicMatch(new File(xlsxFile), true, false);
+            match=findConrecteMatch(match);
+            if (match != null) {
+                assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", match.getMimeType());
+            } else {
+                System.out.print("failed");
+                fail("no match in testXlsx()");
+            }
+            System.out.print("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("exception in testXlsx(). message: " + e);
+        } catch (Error e) {
+            e.printStackTrace();
+            fail("error in testXlsx(). message: " + e.getMessage());
+        }
+    }
 
+    
+    private static MagicMatch findConrecteMatch(MagicMatch magicmatch) {
+        if(magicmatch.getSubMatches() == null || magicmatch.getSubMatches().size()<1) {
+            return magicmatch;
+        } else {
+            //TODO: follow just the first SubMatch?
+            return findConrecteMatch((MagicMatch)magicmatch.getSubMatches().iterator().next());
+        }
+    }
+       
 }
