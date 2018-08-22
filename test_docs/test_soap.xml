@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope
+	xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
+	<soapenv:Body>
+		<v1:something xmlns:v1="http://something">
+			<status>
+				<success>true</success>
+				<message>All Right!</message>
+			</status>
+		</v1:something>
+	</soapenv:Body>
+</soapenv:Envelope>
