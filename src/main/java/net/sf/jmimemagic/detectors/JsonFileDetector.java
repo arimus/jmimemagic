@@ -4,22 +4,20 @@ Copyright (C) 2003-2017 David Castro
 */
 package net.sf.jmimemagic.detectors;
 
-import net.sf.jmimemagic.MagicDetector;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Map;
 
-import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 
-import java.io.*;
-
-import java.util.Map;
-import java.util.regex.Pattern;
+import net.sf.jmimemagic.MagicDetector;
 
 
 /**
