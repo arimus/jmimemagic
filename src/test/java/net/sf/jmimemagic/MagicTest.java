@@ -29,6 +29,7 @@ public class MagicTest extends TestCase {
 	private static String odtFile = "test_docs/test.odt";
 	private static String zipFile = "test_docs/test.zip";
 	private static String soapFile = "test_docs/test_soap.xml";
+	private static String jsonFile = "test_docs/test_json.js";
 
 	public static void main(String args[]) {
 		junit.textui.TestRunner.run(MagicTest.class);
@@ -567,5 +568,26 @@ public class MagicTest extends TestCase {
 			fail("error in testSoap(). message: " + e.getMessage());
 		}
 	}
+	
+	 public void testJson() {
+	    System.out.print("\ntesting Json File...");
+	    try {
+	      MagicMatch match = Magic.getMagicMatch(new File(jsonFile), false, false);
+	      if (match != null) {
+	        assertEquals("application/json", match.getMimeType());
+	      } else {
+	        System.out.print("failed");
+	        fail("no match in testJson()");
+	      }
+	      System.out.print("ok");
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	      fail("exception in testJson(). message: " + e);
+	    } catch (Error e) {
+	      e.printStackTrace();
+	      fail("error in testJson(). message: " + e.getMessage());
+	    }
+
+	  }
 
 }
