@@ -1047,6 +1047,12 @@
 	</match-list>
 </match>
 <match>
+	<mimetype>application/x-xz</mimetype>
+	<extension>xz</extension>
+	<description>xz compressed data</description>
+	<test offset="1" type="string" comparator="=">7zXZ</test>
+</match>
+<match>
 	<mimetype>application/x-shockwave-flash</mimetype>
 	<extension>swf</extension>
 	<description>Macromedia Flash data,</description>
