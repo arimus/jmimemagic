@@ -57,6 +57,8 @@ Maven:
       <version>0.1.3</version>
   </dependency>
 
+  For new version, clone this project and build this project and use jar file directly.
+
 Contributions:
   Thanks to the MMBase team (http://www.mmbase.org/) for doing the work of
   creating the original basis for the XML version of the magic file.
