@@ -4,29 +4,16 @@ Copyright (C) 2003-2017 David Castro
 */
 package net.sf.jmimemagic;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.XMLReader;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -37,39 +24,34 @@ import java.util.Map;
   */
 public class MagicParser extends DefaultHandler implements ContentHandler, ErrorHandler
 {
-    private static String magicFile = "/magic.xml";
-    private static Log log = LogFactory.getLog(MagicParser.class);
+
 
     // Namespaces feature id (http://xml.org/sax/features/namespaces).
     protected static final String NAMESPACES_FEATURE_ID = "http://xml.org/sax/features/namespaces";
 
-    // Validation feature id (http://xml.org/sax/features/validation). 
+    // Validation feature id (http://xml.org/sax/features/validation).
     protected static final String VALIDATION_FEATURE_ID = "http://xml.org/sax/features/validation";
 
-    // Schema validation feature id (http://apache.org/xml/features/validation/schema). 
+    // Schema validation feature id (http://apache.org/xml/features/validation/schema).
     protected static final String SCHEMA_VALIDATION_FEATURE_ID = "http://apache.org/xml/features/validation/schema";
 
-    // Schema full checking feature id (http://apache.org/xml/features/validation/schema-full-checking). 
+    // Schema full checking feature id (http://apache.org/xml/features/validation/schema-full-checking).
     protected static final String SCHEMA_FULL_CHECKING_FEATURE_ID = "http://apache.org/xml/features/validation/schema-full-checking";
 
-    // Default parser name. 
-    protected static final String DEFAULT_PARSER_NAME = "org.apache.xerces.parsers.SAXParser";
-
-    // Default namespaces support (true). 
+    // Default namespaces support (true).
     protected static final boolean DEFAULT_NAMESPACES = true;
 
-    // Default validation support (false). 
+    // Default validation support (false).
     protected static final boolean DEFAULT_VALIDATION = false;
 
-    // Default Schema validation support (false). 
+    // Default Schema validation support (false).
     protected static final boolean DEFAULT_SCHEMA_VALIDATION = false;
 
-    // Default Schema full checking support (false). 
+    // Default Schema full checking support (false).
     protected static final boolean DEFAULT_SCHEMA_FULL_CHECKING = false;
     private boolean initialized = false;
-    private XMLReader parser = null;
-    private List<MagicMatcher> stack = new ArrayList<MagicMatcher>();
-    private Collection<MagicMatcher> matchers = new ArrayList<MagicMatcher>();
+    private final List<MagicMatcher> stack = new ArrayList<>();
+    private final Collection<MagicMatcher> matchers = new ArrayList<>();
     private MagicMatcher matcher = null;
     private MagicMatch match = null;
     private Map<String,String> properties = null;
@@ -84,7 +66,6 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
      */
     public MagicParser()
     {
-        log.debug("instantiated");
     }
 
     /**
@@ -95,73 +76,43 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
     public synchronized void initialize()
         throws MagicParseException
     {
-        boolean namespaces = DEFAULT_NAMESPACES;
-        boolean validation = DEFAULT_VALIDATION;
-        boolean schemaValidation = DEFAULT_SCHEMA_VALIDATION;
-        boolean schemaFullChecking = DEFAULT_SCHEMA_FULL_CHECKING;
 
         if (!initialized) {
             // use default parser
-            try {
-                parser = XMLReaderFactory.createXMLReader();
-            } catch (Exception e) {
-                try {
-                    log.debug("falling back to default parser: " + DEFAULT_PARSER_NAME);
-                    parser = XMLReaderFactory.createXMLReader(DEFAULT_PARSER_NAME);
-                } catch (Exception ee) {
-                    throw new MagicParseException("unable to instantiate parser");
-                }
-            }
 
-            // set parser features
+            SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+            SAXParser parser;
+            XMLReader reader;
             try {
-                parser.setFeature(NAMESPACES_FEATURE_ID, namespaces);
-            } catch (SAXException e) {
-                log.debug("initialize(): warning: Parser does not support feature (" +
-                    NAMESPACES_FEATURE_ID + ")");
-            }
+                parser = parserFactory.newSAXParser();
+                reader = parser.getXMLReader();
+                reader.setFeature(NAMESPACES_FEATURE_ID, DEFAULT_NAMESPACES);
+                reader.setFeature(VALIDATION_FEATURE_ID, DEFAULT_VALIDATION);
+                reader.setFeature(SCHEMA_VALIDATION_FEATURE_ID, DEFAULT_SCHEMA_VALIDATION);
+                reader.setFeature(SCHEMA_FULL_CHECKING_FEATURE_ID, DEFAULT_SCHEMA_FULL_CHECKING);
 
-            try {
-                parser.setFeature(VALIDATION_FEATURE_ID, validation);
-            } catch (SAXException e) {
-                log.debug("initialize(): warning: Parser does not support feature (" +
-                    VALIDATION_FEATURE_ID + ")");
-            }
-
-            try {
-                parser.setFeature(SCHEMA_VALIDATION_FEATURE_ID, schemaValidation);
-            } catch (SAXNotRecognizedException e) {
-                // ignore
-            } catch (SAXNotSupportedException e) {
-                log.debug("initialize(): warning: Parser does not support feature (" +
-                    SCHEMA_VALIDATION_FEATURE_ID + ")");
-            }
-
-            try {
-                parser.setFeature(SCHEMA_FULL_CHECKING_FEATURE_ID, schemaFullChecking);
-            } catch (SAXNotRecognizedException e) {
-                // ignore
-            } catch (SAXNotSupportedException e) {
-                log.debug("initialize(): warning: Parser does not support feature (" +
-                    SCHEMA_FULL_CHECKING_FEATURE_ID + ")");
+            } catch (ParserConfigurationException | SAXException e) {
+                throw new MagicParseException(e.getMessage());
             }
 
             // set handlers
-            parser.setErrorHandler(this);
-            parser.setContentHandler(this);
+            reader.setErrorHandler(this);
+            reader.setContentHandler(this);
 
             // parse file
             try {
                 // get the magic file URL
+                String magicFile = "/magic.xml";
                 URL resource = MagicParser.class.getResource(magicFile);
-				String magicURL = resource.toString();
+
+                String magicURL = resource != null ? resource.toString() : null;
 
                 if (magicURL == null) {
-                    log.error("initialize(): couldn't load '" + magicURL + "'");
-                    throw new MagicParseException("couldn't load '" + magicURL + "'");
+
+                    throw new MagicParseException("couldn't load '" + null + "'");
                 }
 
-                parser.parse(magicURL);
+                reader.parse(magicURL);
             } catch (SAXParseException e) {
                 // ignore
             } catch (Exception e) {
@@ -186,23 +137,17 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
     /**
      * DOCUMENT ME!
      *
-     * @throws SAXException DOCUMENT ME!
      */
-    public void startDocument()
-        throws SAXException
-    {
-        log.debug("startDocument()");
+    public void startDocument() {
+
     }
 
     /**
      * DOCUMENT ME!
      *
-     * @throws SAXException DOCUMENT ME!
      */
-    public void endDocument()
-        throws SAXException
-    {
-        log.debug("endDocument()");
+    public void endDocument() {
+
     }
 
     /**
@@ -211,11 +156,8 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
      * @param target DOCUMENT ME!
      * @param data DOCUMENT ME!
      *
-     * @throws SAXException DOCUMENT ME!
      */
-    public void processingInstruction(String target, String data)
-        throws SAXException
-    {
+    public void processingInstruction(String target, String data) {
         // do nothing
     }
 
@@ -226,13 +168,9 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
      * @param offset DOCUMENT ME!
      * @param length DOCUMENT ME!
      *
-     * @throws SAXException DOCUMENT ME!
      */
-    public void characters(char[] ch, int offset, int length)
-        throws SAXException
-    {
+    public void characters(char[] ch, int offset, int length) {
         String value = new String(ch, offset, length);
-        log.debug("characters(): value is '" + value + "'");
 
         finalValue += value;
     }
@@ -244,11 +182,8 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
      * @param offset DOCUMENT ME!
      * @param length DOCUMENT ME!
      *
-     * @throws SAXException DOCUMENT ME!
      */
-    public void ignorableWhitespace(char[] ch, int offset, int length)
-        throws SAXException
-    {
+    public void ignorableWhitespace(char[] ch, int offset, int length) {
         // do nothing
     }
 
@@ -260,17 +195,12 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
      * @param qname DOCUMENT ME!
      * @param attributes DOCUMENT ME!
      *
-     * @throws SAXException DOCUMENT ME!
      */
-    public void startElement(String uri, String localName, String qname, Attributes attributes)
-        throws SAXException
-    {
-        log.debug("startElement()");
-        log.debug("startElement(): localName is '" + localName + "'");
+    public void startElement(String uri, String localName, String qname, Attributes attributes) {
 
         // create a new matcher
         if (localName.equals("match")) {
-            log.debug("startElement(): creating new matcher");
+
             // match to hold data
             match = new MagicMatch();
             // our matcher
@@ -280,87 +210,85 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
 
         // these are subelements of matcher, but also occur elsewhere
         if (matcher != null) {
-            if (localName.equals("mimetype")) {
-                isMimeType = true;
-            } else if (localName.equals("extension")) {
-                isExtension = true;
-            } else if (localName.equals("description")) {
-                isDescription = true;
-            } else if (localName.equals("test")) {
-                isTest = true;
+            switch (localName) {
+                case "mimetype" -> isMimeType = true;
+                case "extension" -> isExtension = true;
+                case "description" -> isDescription = true;
+                case "test" -> {
+                    isTest = true;
 
-                int length = attributes.getLength();
+                    int length = attributes.getLength();
 
-                for (int i = 0; i < length; i++) {
-                    String attrLocalName = attributes.getLocalName(i);
-                    String attrValue = attributes.getValue(i);
+                    for (int i = 0; i < length; i++) {
+                        String attrLocalName = attributes.getLocalName(i);
+                        String attrValue = attributes.getValue(i);
 
-                    if (attrLocalName.equals("offset")) {
-                        if (!attrValue.equals("")) {
-                            match.setOffset(new Integer(attrValue).intValue());
-                            log.debug("startElement():   setting offset to '" + attrValue + "'");
-                        }
-                    } else if (attrLocalName.equals("length")) {
-                        if (!attrValue.equals("")) {
-                            match.setLength(new Integer(attrValue).intValue());
-                            log.debug("startElement():   setting length to '" + attrValue + "'");
-                        }
-                    } else if (attrLocalName.equals("type")) {
-                        match.setType(attrValue);
-                        log.debug("startElement():   setting type to '" + attrValue + "'");
-                    } else if (attrLocalName.equals("bitmask")) {
-                        if (!attrValue.equals("")) {
-                            match.setBitmask(attrValue);
-                            log.debug("startElement():   setting bitmask to '" + attrValue + "'");
-                        }
-                    } else if (attrLocalName.equals("comparator")) {
-                        match.setComparator(attrValue);
-                        log.debug("startElement():   setting comparator to '" + attrValue + "'");
-                    }
-                }
-            } else if (localName.equals("property")) {
-                int length = attributes.getLength();
-                String name = null;
-                String value = null;
+                        switch (attrLocalName) {
+                            case "offset":
+                                if (!attrValue.equals("")) {
+                                    match.setOffset(Integer.parseInt(attrValue));
 
-                for (int i = 0; i < length; i++) {
-                    String attrLocalName = attributes.getLocalName(i);
-                    String attrValue = attributes.getValue(i);
+                                }
+                                break;
+                            case "length":
+                                if (!attrValue.equals("")) {
+                                    match.setLength(Integer.parseInt(attrValue));
+                                }
+                                break;
+                            case "type":
+                                match.setType(attrValue);
 
-                    if (attrLocalName.equals("name")) {
-                        if (!attrValue.equals("")) {
-                            name = attrValue;
-                        }
-                    } else if (attrLocalName.equals("value")) {
-                        if (!attrValue.equals("")) {
-                            value = attrValue;
+                                break;
+                            case "bitmask":
+                                if (!attrValue.equals("")) {
+                                    match.setBitmask(attrValue);
+
+                                }
+                                break;
+                            case "comparator":
+                                match.setComparator(attrValue);
+
+                                break;
                         }
                     }
                 }
+                case "property" -> {
+                    int length = attributes.getLength();
+                    String name = null;
+                    String value = null;
 
-                // save the property to our map
-                if ((name != null) && (value != null)) {
-                    if (properties == null) {
-                        properties = new HashMap<String, String>();
+                    for (int i = 0; i < length; i++) {
+                        String attrLocalName = attributes.getLocalName(i);
+                        String attrValue = attributes.getValue(i);
+
+                        if (attrLocalName.equals("name")) {
+                            if (!attrValue.equals("")) {
+                                name = attrValue;
+                            }
+                        } else if (attrLocalName.equals("value")) {
+                            if (!attrValue.equals("")) {
+                                value = attrValue;
+                            }
+                        }
                     }
 
-                    if (!properties.containsKey(name)) {
-                        properties.put(name, value);
-                        log.debug("startElement():   setting property '" + name + "'='" + value +
-                            "'");
-                    } else {
-                        log.debug("startElement():   not setting property '" + name +
-                            "', duplicate key");
+                    // save the property to our map
+                    if ((name != null) && (value != null)) {
+                        if (properties == null) {
+                            properties = new HashMap<>();
+                        }
+
+                        if (!properties.containsKey(name)) {
+                            properties.put(name, value);
+
+                        }
                     }
                 }
-            } else if (localName.equals("match-list")) {
-                log.debug("startElement(): found submatcher list");
-
-                // this means we are processing a child match, so we need to push
-                // the existing match on the stack
-                log.debug("startElement(): pushing current matcher to stack");
-                stack.add(matcher);
-            } else {
+                case "match-list" -> // this means we are processing a child match, so we need to push
+                    // the existing match on the stack
+                        stack.add(matcher);
+                default -> {
+                }
                 // we don't care about this type
             }
         }
@@ -373,82 +301,77 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
      * @param localName DOCUMENT ME!
      * @param qname DOCUMENT ME!
      *
-     * @throws SAXException DOCUMENT ME!
      */
-    public void endElement(String uri, String localName, String qname)
-        throws SAXException
-    {
-        log.debug("endElement()");
-        log.debug("endElement(): localName is '" + localName + "'");
+    public void endElement(String uri, String localName, String qname) {
 
         // determine which tag these chars are for and save them
         if (isMimeType) {
             isMimeType = false;
             match.setMimeType(finalValue);
-            log.debug("characters(): setting mimetype to '" + finalValue + "'");
+
         } else if (isExtension) {
             isExtension = false;
             match.setExtension(finalValue);
-            log.debug("characters(): setting extension to '" + finalValue + "'");
+
         } else if (isDescription) {
             isDescription = false;
             match.setDescription(finalValue);
-            log.debug("characters(): setting description to '" + finalValue + "'");
+
         } else if (isTest) {
             isTest = false;
             match.setTest(convertOctals(finalValue));
-            log.debug("characters(): setting test to '" + convertOctals(finalValue) + "'");
-        } else {
-            // do nothing
-        }
+
+        }  // do nothing
+
 
         finalValue = "";
 
         // need to save the current matcher here if it is filled out enough and
         // we have an /matcher
-        if (localName.equals("match")) {
-            // FIXME - make sure the MagicMatcher isValid() test works
-            if (matcher.isValid()) {
-                // set the collected properties on this matcher
-                match.setProperties(properties);
+        switch (localName) {
+            case "match":
+                // FIXME - make sure the MagicMatcher isValid() test works
+                if (matcher.isValid()) {
+                    // set the collected properties on this matcher
+                    match.setProperties(properties);
 
-                // add root match
-                if (stack.size() == 0) {
-                    log.debug("endElement(): adding root matcher");
-                    matchers.add(matcher);
-                } else {
-                    // we need to add the match to it's parent which is on the
-                    // stack
-                    log.debug("endElement(): adding sub matcher");
+                    // add root match
+                    if (stack.size() == 0) {
 
-                    MagicMatcher m = (MagicMatcher) stack.get(stack.size() - 1);
-                    m.addSubMatcher(matcher);
+                        matchers.add(matcher);
+                    } else {
+                        // we need to add the match to it's parent which is on the
+                        // stack
+
+                        MagicMatcher m = stack.get(stack.size() - 1);
+                        m.addSubMatcher(matcher);
+                    }
                 }
-            } else {
-                // don't add invalid matchers
-                log.info("endElement(): not adding invalid matcher '" + match.getDescription() +
-                    "'");
-            }
 
-            matcher = null;
-            properties = null;
+                matcher = null;
+                properties = null;
 
-            // restore matcher from the stack if we have an /matcher-list
-        } else if (localName.equals("match-list")) {
-            if (stack.size() > 0) {
-                log.debug("endElement(): popping from the stack");
-                matcher = (MagicMatcher) stack.get(stack.size() - 1);
-                // pop from the stack
-                stack.remove(matcher);
-            }
-        } else if (localName.equals("mimetype")) {
-            isMimeType = false;
-        } else if (localName.equals("extension")) {
-            isExtension = false;
-        } else if (localName.equals("description")) {
-            isDescription = false;
-        } else if (localName.equals("test")) {
-            isTest = false;
+                // restore matcher from the stack if we have an /matcher-list
+                break;
+            case "match-list":
+                if (stack.size() > 0) {
+                    matcher = stack.get(stack.size() - 1);
+                    // pop from the stack
+                    stack.remove(matcher);
+                }
+                break;
+            case "mimetype":
+                isMimeType = false;
+                break;
+            case "extension":
+                isExtension = false;
+                break;
+            case "description":
+                isDescription = false;
+                break;
+            case "test":
+                isTest = false;
+                break;
         }
     }
 
@@ -457,11 +380,8 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
      *
      * @param ex DOCUMENT ME!
      *
-     * @throws SAXException DOCUMENT ME!
      */
-    public void warning(SAXParseException ex)
-        throws SAXException
-    {
+    public void warning(SAXParseException ex) {
         // FIXME
     }
 
@@ -503,7 +423,7 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
     private ByteBuffer convertOctals(String s)
     {
         int beg = 0;
-        int end = 0;
+        int end;
         int chr;
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
 
@@ -511,57 +431,42 @@ public class MagicParser extends DefaultHandler implements ContentHandler, Error
             if (s.charAt(end + 1) != '\\') {
                 //log.debug("appending chunk '"+s.substring(beg, end)+"'");
                 for (int z = beg; z < end; z++) {
-                    buf.write((int) s.charAt(z));
+                    buf.write(s.charAt(z));
                 }
 
-                //log.debug("found \\ at position "+end);
-                //log.debug("converting octal '"+s.substring(end, end+4)+"'");
                 if ((end + 4) <= s.length()) {
                     try {
                         chr = Integer.parseInt(s.substring(end + 1, end + 4), 8);
 
-                        //log.debug("converted octal '"+s.substring(end+1,end+4)+"' to '"+chr);
-                        //log.debug("converted octal back to '"+Integer.toOctalString(chr));
-
-                        //log.debug("converted '"+s.substring(end+1,end+4)+"' to "+chr+"/"+((char)chr));
                         buf.write(chr);
                         beg = end + 4;
-                        end = beg;
                     } catch (NumberFormatException nfe) {
                         //log.debug("not an octal");
-                        buf.write((int) '\\');
+                        buf.write('\\');
                         beg = end + 1;
-                        end = beg;
                     }
                 } else {
                     //log.debug("not an octal, not enough chars left in string");
-                    buf.write((int) '\\');
+                    buf.write('\\');
                     beg = end + 1;
-                    end = beg;
                 }
             } else {
                 //log.debug("appending \\");
-                buf.write((int) '\\');
+                buf.write('\\');
                 beg = end + 1;
-                end = beg;
             }
         }
 
-        if (end < s.length()) {
-            for (int z = beg; z < s.length(); z++) {
-                buf.write((int) s.charAt(z));
-            }
+        for (int z = beg; z < s.length(); z++) {
+            buf.write(s.charAt(z));
         }
 
         try {
-            log.debug("convertOctals(): returning buffer size '" + buf.size() + "'");
 
             ByteBuffer b = ByteBuffer.allocate(buf.size());
 
             return b.put(buf.toByteArray());
         } catch (Exception e) {
-            log.error("convertOctals(): error parsing string: " + e);
-
             return ByteBuffer.allocate(0);
         }
     }

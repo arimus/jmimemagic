@@ -9,11 +9,10 @@ import net.sf.jmimemagic.MagicDetector;
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -26,7 +25,6 @@ import java.util.regex.Pattern;
   */
 public class TextFileDetector implements MagicDetector
 {
-    private static Log log = LogFactory.getLog(TextFileDetector.class);
 
     /**
      * Creates a new TextFileDetector object.
@@ -102,7 +100,6 @@ public class TextFileDetector implements MagicDetector
     public String[] process(byte[] data, int offset, int length, long bitmask, char comparator,
         String mimeType, Map<String,String> params)
     {
-        log.debug("processing stream data");
 
         BOMInputStream bomIn = null;
         try {
@@ -110,20 +107,16 @@ public class TextFileDetector implements MagicDetector
             if (bomIn.hasBOM()) {
                 return new String[] { "text/plain" };
             }
-        } catch (IOException e) {
-            log.error("TextFileDetector: error detecting byte order mark");
+        } catch (IOException ignored) {
+
         } finally {
         	IOUtils.closeQuietly(bomIn);
         }
 
-        try {
-            String s = new String(data, "UTF-8");
+        String s = new String(data, StandardCharsets.UTF_8);
 
-            if (!Pattern.matches("/[^[:ascii:][:space:]]/", s)) {
-                return new String[] { "text/plain" };
-            }
-        } catch (UnsupportedEncodingException e) {
-            log.error("TextFileDetector: failed to process data");
+        if (!Pattern.matches("/[^[:asci][:space]]/", s)) {
+            return new String[] { "text/plain" };
         }
 
         return null;
@@ -145,7 +138,6 @@ public class TextFileDetector implements MagicDetector
     public String[] process(File file, int offset, int length, long bitmask, char comparator,
         String mimeType, Map<String,String> params)
     {
-        log.debug("processing file data");
 
         BufferedInputStream is =null;
         try {
@@ -156,8 +148,8 @@ public class TextFileDetector implements MagicDetector
             if (n > 0) {
                 return process(b, offset, length, bitmask, comparator, mimeType, params);
             }
-        } catch (IOException e) {
-            log.error("TextFileDetector: error", e);
+        } catch (IOException ignored) {
+
         } finally {
         	IOUtils.closeQuietly(is);
         }
