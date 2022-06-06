@@ -11,6 +11,7 @@ package net.sf.jmimemagic;
  * @author $Author: arimus $
  * @version $Revision: 1.1 $
  */
+@SuppressWarnings({"unused"})
 public class MagicMatchNotFoundException extends Exception
 {
     /** 

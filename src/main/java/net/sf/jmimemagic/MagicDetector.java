@@ -15,6 +15,7 @@ import java.util.Map;
  * @author $Author$
  * @version $Revision$
   */
+@SuppressWarnings({"unused"})
 public interface MagicDetector
 {
     // get the short name of this detector
@@ -23,7 +24,7 @@ public interface MagicDetector
      *
      * @return DOCUMENT ME!
      */
-    public String getName();
+    String getName();
 
     // get the display name of this detector
     /**
@@ -31,7 +32,7 @@ public interface MagicDetector
      *
      * @return DOCUMENT ME!
      */
-    public String getDisplayName();
+    String getDisplayName();
 
     // get the version of this plugin
     /**
@@ -39,7 +40,7 @@ public interface MagicDetector
      *
      * @return DOCUMENT ME!
      */
-    public String getVersion();
+    String getVersion();
 
     // get a list of types this detector handles
     /**
@@ -47,7 +48,7 @@ public interface MagicDetector
      *
      * @return DOCUMENT ME!
      */
-    public String[] getHandledTypes();
+    String[] getHandledTypes();
 
     // get a list of file extensions this detector typically deals with
     /**
@@ -55,7 +56,7 @@ public interface MagicDetector
      *
      * @return DOCUMENT ME!
      */
-    public String[] getHandledExtensions();
+    String[] getHandledExtensions();
 
     // process the stream and return all matching content types
     /**
@@ -71,7 +72,7 @@ public interface MagicDetector
      *
      * @return DOCUMENT ME!
      */
-    public String[] process(byte[] data, int offset, int length, long bitmask, char comparator,
+    String[] process(byte[] data, int offset, int length, long bitmask, char comparator,
         String mimeType, Map<String,String> params);
 
     // process the file and return all matching content types
@@ -88,6 +89,6 @@ public interface MagicDetector
      *
      * @return DOCUMENT ME!
      */
-    public String[] process(File file, int offset, int length, long bitmask, char comparator,
+    String[] process(File file, int offset, int length, long bitmask, char comparator,
         String mimeType, Map<String,String> params);
 }

@@ -4,8 +4,6 @@ Copyright (C) 2003-2017 David Castro
 */
 package net.sf.jmimemagic;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.nio.ByteBuffer;
 
@@ -25,7 +23,6 @@ import java.util.Map;
  */
 public class MagicMatch implements Cloneable
 {
-    private static Log log = LogFactory.getLog(MagicMatch.class);
     private String mimeType = null;
     private String extension = null;
     private String description = null;
@@ -39,7 +36,7 @@ public class MagicMatch implements Cloneable
     private String type = "";
     private long bitmask = 0xFFFFFFFFL;
     private char comparator = '\0';
-    private List<MagicMatch> subMatches = new ArrayList<MagicMatch>(0);
+    private final List<MagicMatch> subMatches = new ArrayList<>(0);
     private Map<String,String> properties;
 
     /** 
@@ -47,30 +44,10 @@ public class MagicMatch implements Cloneable
      */
     public MagicMatch()
     {
-        log.debug("instantiated");
+
     }
 
-    /**
-     * print information about this match
-     *
-     * @return DOCUMENT ME!
-     */
-    public String print()
-    {
-        StringBuffer string = new StringBuffer();
-        string.append("\n");
-        string.append("mime type: ").append(mimeType).append("\n");
-        string.append("description: ").append(description).append("\n");
-        string.append("extension: ").append(extension).append("\n");
-        string.append("offset: ").append(offset).append("\n");
-        string.append("length: ").append(length).append("\n");
-        string.append("test: ").append(new String(test.array())).append("\n");
-        string.append("type: ").append(type).append("\n");
-        string.append("comparator: ").append(comparator).append("\n");
-        string.append("bitmask: ").append(bitmask);
 
-        return string.toString();
-    }
 
     /**
      * set the mime type for this magic match
@@ -281,7 +258,6 @@ public class MagicMatch implements Cloneable
      */
     public void addSubMatch(MagicMatch m)
     {
-        log.debug("adding submatch '" + m.getDescription() + "' to '" + getDescription() + "'");
         subMatches.add(m);
     }
 
@@ -292,7 +268,6 @@ public class MagicMatch implements Cloneable
      */
     public void setSubMatches(Collection<MagicMatch> a)
     {
-        log.debug("setting submatches for '" + getDescription() + "'");
         subMatches.clear();
         subMatches.addAll(a);
     }
@@ -322,10 +297,10 @@ public class MagicMatch implements Cloneable
 
         Collection<MagicMatch> submatches = getSubMatches();
         Iterator<MagicMatch> i = submatches.iterator();
-        MagicMatch m = null;
+        MagicMatch m;
 
         while (i.hasNext()) {
-            m = (MagicMatch) i.next();
+            m = i.next();
 
             if (m.descriptionMatches(desc)) {
                 return true;
@@ -350,10 +325,10 @@ public class MagicMatch implements Cloneable
 
         Collection<MagicMatch> submatches = getSubMatches();
         Iterator<MagicMatch> i = submatches.iterator();
-        MagicMatch m = null;
+        MagicMatch m;
 
         while (i.hasNext()) {
-            m = (MagicMatch) i.next();
+            m = i.next();
 
             if (m.mimeTypeMatches(desc)) {
                 return true;
@@ -373,6 +348,9 @@ public class MagicMatch implements Cloneable
     protected Object clone()
         throws CloneNotSupportedException
     {
+        // Add super call
+        super.clone();
+
         MagicMatch clone = new MagicMatch();
         clone.setBitmask(Long.toString(bitmask, 8));
         clone.setComparator("" + comparator);
@@ -384,13 +362,12 @@ public class MagicMatch implements Cloneable
 
         // these properties should only be String types, so we shouldn't have to clone them
         if(properties!= null) {
-	        Map<String,String> m = new HashMap<String, String>();
-	        m.putAll(properties);
+            Map<String, String> m = new HashMap<>(properties);
 	        clone.setProperties(m);
         }
 
         Iterator<MagicMatch> i = subMatches.iterator();
-        List<MagicMatch> a = new ArrayList<MagicMatch>();
+        List<MagicMatch> a = new ArrayList<>();
 
         while (i.hasNext()) {
             MagicMatch mm = i.next();

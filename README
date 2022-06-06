@@ -79,3 +79,14 @@ Developers:
 Problems/questions/suggestions:
   David Castro <arimus@user.sourceforge.net>
 
+
+Updates:
+
+<ul>
+<li>Drop <pre><code>import org.apache.commons.logging.*</code></pre> dependency.</li>
+<li>Replace deprecated <pre><code>org.xml.sax.helpers.XMLReaderFactory</code></pre> with <pre><code>javax.xml.parsers.SAXParserFactory</code></pre> </li>
+<li>Switch from Java 6 to Java 11 </li>
+<li>Update dependencies</li>
+</ul>
+
+
